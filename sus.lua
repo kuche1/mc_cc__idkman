@@ -2,9 +2,14 @@
 local BUILD_IND = 1
 local FUEL_IND = 2
 
-function putSwas()
+function putSwas(arg)
 
-	local size = 5
+	if #arg ~= 1 then
+		print("bad number of arguments")
+		return 1
+	end
+
+	local size = tonumber(rg[1]) -- 5
 
 	if size%2 ~= 1 then
 		print("bad size")
@@ -104,5 +109,5 @@ function putSwas()
 
 end
 
-putSwas()
+putSwas(arg)
 
