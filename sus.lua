@@ -5,6 +5,12 @@ local FUEL_IND = 2
 function putSwas()
 
 	local size = 5
+
+	if size%2 != 1 then
+		print("bad size")
+		return 1
+	end
+	
 	local half = math.floor(size / 2)
 
 	turtle.select(FUEL_IND)
@@ -12,6 +18,8 @@ function putSwas()
 
 	turtle.select(BUILD_IND)
 	turtle.up()
+
+	-- 0% done
 
 	for i=1,half+1 do
 	    turtle.forward()
@@ -23,32 +31,34 @@ function putSwas()
 	    turtle.placeDown()
 	end
 
+	-- 25% done
+
 	for i=1,half do
 	    turtle.forward()
 	    turtle.placeDown()
 	end
 
+	-- 50% done
+
 	turtle.forward()
 	turtle.down()
 	turtle.down()
 
-	for i=1,2 do
+	for i=1,half do
 	    turtle.back()
 	    turtle.placeDown()
 	end
 
-	for i=1,2 do
+	for i=1,half do
 	    turtle.forward()
 	end
 
-	for i=1,1 do
-	    turtle.down()
-	end
+	turtle.down()
 
 	turtle.turnRight()
 	turtle.turnRight()
 
-	for i=1,2 do
+	for i=1,half do
 	    turtle.down()
 	    turtle.place()
 	end
