@@ -9,7 +9,7 @@ function putSwas(arg)
 		return 1
 	end
 
-	local size = tonumber(rg[1]) -- 5
+	local size = tonumber(arg[1]) -- 5
 
 	if size%2 ~= 1 then
 		print("bad size")
