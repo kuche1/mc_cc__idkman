@@ -46,8 +46,10 @@ function putSwas(arg)
 	-- 50% done
 
 	turtle.forward()
-	turtle.down()
-	turtle.down()
+
+	for i=1,half+1 do
+		turtle.down()
+	end
 
 	for i=1,half do
 	    turtle.back()
