@@ -1,5 +1,4 @@
 
-
 ---- INVENTORY
 -- 4 - fuel (coal)
 -- 1 - bloka za stroene (pe4ka)
