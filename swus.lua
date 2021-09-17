@@ -1,6 +1,7 @@
 
 ---- TODO
 -- check for fuel
+-- get back down in case of an error
 
 ---- INFO
 -- fuel goes to 16
