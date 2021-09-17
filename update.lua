@@ -22,7 +22,9 @@ end
 
 local files_to_update = {"update.lua", "swus.lua"}
 
-for file in files_to_update do
-	update_a_file(file)
+local item = files_to_upload
+for item do
+	update_a_file(item.valie)
+	item = item.next
 end
 
