@@ -68,15 +68,15 @@ function putSwas()
 
 	-- 75% done
 
-	for i=1,5 do
+	for i=1,size do
 	    turtle.up()
 	end
 
-	for i=1,4 do
+	for i=1,half+2 do
 	    turtle.back()
 	end
 
-	for i=1,2 do
+	for i=1,half do
 	    turtle.down()
 	end
 
