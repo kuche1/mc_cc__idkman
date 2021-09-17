@@ -6,7 +6,7 @@ function putSwas()
 
 	local size = 5
 
-	if size%2 != 1 then
+	if size%2 ~= 1 then
 		print("bad size")
 		return 1
 	end
