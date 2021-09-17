@@ -80,22 +80,25 @@ function putSwas()
 	    turtle.down()
 	end
 
-	turtle.placeDown()
-	turtle.back()
+	for i=1,half-1 do
+		turtle.placeDown()
+		turtle.back()
+	end
+
 	turtle.placeDown()
 
-	for i=1,2 do
+	for i=1,half do
 	    turtle.up()
 	    turtle.placeDown()
 	end
 
 	-- 100% done
 
-	for i=1,5 do
+	for i=1,size do
 	    turtle.forward()
 	end
 
-	for i=1,5 do
+	for i=1,size do
 	    turtle.down()
 	end
 
