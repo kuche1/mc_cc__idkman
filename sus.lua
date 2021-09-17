@@ -88,3 +88,6 @@ function putSwas()
 	end
 
 end
+
+putSwas()
+
