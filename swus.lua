@@ -1,6 +1,44 @@
 
-local BUILD_IND = 1
+---- TODO
+-- check for fuel
+
+---- INFO
+-- fuel goes to 16
+-- all else is building blocks
+
 local FUEL_IND = 16
+
+
+function place_wrapper()
+
+	while turtle.getItemCount() == 0 then
+
+		local next = turtle.getSelectedSlot() + 1
+		if next >= FUEL_IND then
+			error("ran out of building blocks")
+		else
+			turtle.select(next)
+		end
+
+	end
+
+end
+
+function place()
+	place_wrapper()
+	turtle.place()
+end
+
+function placeForward()
+	place_wrapper()
+	turtle.placeDown()
+end
+
+function placeDown()
+	place_wrapper()
+	turtle.placeDown()
+end
+
 
 function putSwas(arg)
 
@@ -21,7 +59,7 @@ function putSwas(arg)
 	turtle.select(FUEL_IND)
 	turtle.refuel()
 
-	turtle.select(BUILD_IND)
+	turtle.select(1)
 
 	turtle.up()
 
@@ -29,19 +67,19 @@ function putSwas(arg)
 
 	for i=1,half+1 do
 	    turtle.forward()
-	    turtle.placeDown()
+	    placeDown()
 	end
 
 	for i=1,size-1 do
 	    turtle.up()
-	    turtle.placeDown()
+	    placeDown()
 	end
 
 	-- 25% +25/2% done
 
 	for i=1,half do
 	    turtle.forward()
-	    turtle.placeDown()
+	    placeDown()
 	end
 
 	-- 50% done
@@ -54,7 +92,7 @@ function putSwas(arg)
 
 	for i=1,half do
 	    turtle.back()
-	    turtle.placeDown()
+	    placeDown()
 	end
 
 	for i=1,half do
@@ -68,7 +106,7 @@ function putSwas(arg)
 
 	for i=1,half do
 	    turtle.down()
-	    turtle.place()
+	    place()
 	end
 
 	turtle.turnRight()
@@ -89,15 +127,15 @@ function putSwas(arg)
 	end
 
 	for i=1,half-1 do
-		turtle.placeDown()
+		placeDown()
 		turtle.back()
 	end
 
-	turtle.placeDown()
+	placeDown()
 
 	for i=1,half do
 	    turtle.up()
-	    turtle.placeDown()
+	    placeDown()
 	end
 
 	-- 100% done
