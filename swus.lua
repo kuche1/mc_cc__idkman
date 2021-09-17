@@ -1,6 +1,6 @@
 
 local BUILD_IND = 1
-local FUEL_IND = 2
+local FUEL_IND = 16
 
 function putSwas(arg)
 
