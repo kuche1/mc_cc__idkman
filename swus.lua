@@ -11,7 +11,7 @@ local FUEL_IND = 16
 
 function place_wrapper()
 
-	while turtle.getItemCount() == 0 then
+	while turtle.getItemCount() == 0 do
 
 		local next = turtle.getSelectedSlot() + 1
 		if next >= FUEL_IND then
