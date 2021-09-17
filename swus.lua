@@ -22,6 +22,7 @@ function putSwas(arg)
 	turtle.refuel()
 
 	turtle.select(BUILD_IND)
+
 	turtle.up()
 
 	-- 0% done
@@ -36,7 +37,7 @@ function putSwas(arg)
 	    turtle.placeDown()
 	end
 
-	-- 25% done
+	-- 25% +25/2% done
 
 	for i=1,half do
 	    turtle.forward()
@@ -47,7 +48,7 @@ function putSwas(arg)
 
 	turtle.forward()
 
-	for i=1,half+1 do
+	for i=1,half+2 do -- half+1
 		turtle.down()
 	end
 
