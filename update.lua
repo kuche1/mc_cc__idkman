@@ -24,7 +24,7 @@ local files_to_update = {"update.lua", "swus.lua"}
 
 local item = files_to_upload
 while item do
-	update_a_file(item.valie)
+	update_a_file(item.value)
 	item = item.next
 end
 
