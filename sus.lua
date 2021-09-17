@@ -1,31 +1,29 @@
 
----- INVENTORY
--- 4 - fuel (coal)
--- 1 - bloka za stroene (pe4ka)
+local BUILD_IND = 1
+local FUEL_IND = 2
 
 function putSwas()
 
 	local size = 5
 	local half = math.floor(size / 2)
-	local halfp = half + 1
 
-	turtle.select(4)
+	turtle.select(FUEL_IND)
 	turtle.refuel()
 
-	turtle.select(1)
+	turtle.select(BUILD_IND)
 	turtle.up()
 
-	for i=1,halfp do
+	for i=1,half+1 do
 	    turtle.forward()
 	    turtle.placeDown()
 	end
 
-	for i=1,4 do
+	for i=1,size-1 do
 	    turtle.up()
 	    turtle.placeDown()
 	end
 
-	for i=1,2 do
+	for i=1,half do
 	    turtle.forward()
 	    turtle.placeDown()
 	end
