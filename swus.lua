@@ -48,7 +48,7 @@ function putSwas(arg)
 
 	turtle.forward()
 
-	for i=1,half+1 do
+	for i=1,half do
 		turtle.down()
 	end
 
