@@ -4,6 +4,8 @@ local FUEL_IND = 2
 
 function putSwas(arg)
 
+	return 1
+
 	if #arg ~= 1 then
 		print("bad number of arguments")
 		return 1
