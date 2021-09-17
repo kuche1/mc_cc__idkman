@@ -5,13 +5,17 @@
 
 function putSwas()
 
+	local size = 5
+	local half = math.floor(size / 2)
+	local halfp = half + 1
+
 	turtle.select(4)
 	turtle.refuel()
 
 	turtle.select(1)
 	turtle.up()
 
-	for i=1,3 do
+	for i=1,halfp do
 	    turtle.forward()
 	    turtle.placeDown()
 	end
