@@ -2,6 +2,9 @@
 ---- TODO
 -- backup the old updater
 
+local FILES_TO_UPDATE = {"update.lua", "swus.lua"}
+
+
 function update_a_file(arg_fname)
 
 	local fname = "./"..arg_fname
@@ -20,11 +23,16 @@ function update_a_file(arg_fname)
 
 end
 
-local files_to_update = {"update.lua", "swus.lua"}
 
-local item = files_to_upload
-while item do
-	update_a_file(item.value)
-	item = item.next
+fs.copy("./update.lua", "./update_old.lua")
+
+local i = 0
+
+while i <= #FILES_TO_UPDATE do
+	local item = FILES_TO_UPDATE[i]
+	update_a_file(item)
+	i = i + 1
 end
+
+fs.delete("./update_old.lua")
 
