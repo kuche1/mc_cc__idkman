@@ -25,9 +25,10 @@ function update_a_file(arg_fname)
 end
 
 
+fs.delete("./update_old.lua")
 fs.copy("./update.lua", "./update_old.lua")
 
-local i = 0
+local i = 1
 
 while i <= #FILES_TO_UPDATE do
 	local item = FILES_TO_UPDATE[i]
