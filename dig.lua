@@ -109,6 +109,10 @@ end
 
 function dig_a_hole(leny, lenx)
 
+	if leny%2 == 1 then
+		print("warning: odd y values are suboptimal")
+	end
+
 	-- fuel refill
 
 	turtle.select(FUEL_IND)
