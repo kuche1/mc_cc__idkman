@@ -6,6 +6,7 @@ local FUEL_IND = 16
 local PICKUP_IND = 1
 
 local BLACKLIST = {
+	"minecraft:andesite",
 	"minecraft:cobblestone",
 	"minecraft:diorite",
 	"minecraft:dirt",
@@ -84,7 +85,7 @@ end
 
 
 function dig()
-	while turtle.inspect() do
+	while turtle.inspectUp() do
 		dig_wrapper_pre()
 		turtle.dig()
 		dig_wrapper_post()
