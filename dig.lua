@@ -82,15 +82,19 @@ end
 
 
 function dig()
-	dig_wrapper_pre()
-	turtle.dig()
-	dig_wrapper_post()
+	while turtle.inspect() do
+		dig_wrapper_pre()
+		turtle.dig()
+		dig_wrapper_post()
+	end
 end
 
 function digUp()
-	dig_wrapper_pre()
-	turtle.digUp()
-	dig_wrapper_post()
+	while turtle.inspect() do
+		dig_wrapper_pre()
+		turtle.digUp()
+		dig_wrapper_post()
+	end
 end
 
 --
