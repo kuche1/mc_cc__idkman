@@ -8,11 +8,13 @@ local PICKUP_IND = 1
 
 local BLACKLIST = {
 	"minecraft:andesite",
+	"minecraft:coal",
 	"minecraft:cobblestone",
 	"minecraft:diorite",
 	"minecraft:dirt",
 	"minecraft:granite",
 	"minecraft:gravel",
+	"promenade:blunite",
 	}
 
 local WHITELIST = {
