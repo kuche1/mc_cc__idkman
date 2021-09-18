@@ -1,6 +1,6 @@
 
 ---- TODO
--- deal with sand
+-- deal with sand (if sand is above it dissapears)
 
 local FUEL_IND = 16
 local PICKUP_IND = 1
