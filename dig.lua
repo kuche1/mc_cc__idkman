@@ -15,6 +15,7 @@ local WHITELIST = {
 	}
 
 local BLACKLIST = {
+	"byg:rocky_stone",
 	"minecraft:andesite",
 	"minecraft:cobblestone",
 	"minecraft:diorite",
