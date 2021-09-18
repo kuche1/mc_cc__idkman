@@ -11,6 +11,7 @@ local PICKUP_IND = 1
 
 local WHITELIST = {
 	"minecraft:coal",
+	"minecraft:gold_ore",
 	"minecraft:iron_ore",
 	"minecraft:obsidian",
 	"minecraft:redstone",
