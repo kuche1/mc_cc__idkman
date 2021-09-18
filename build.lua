@@ -143,13 +143,18 @@ function build_shape(shape)
 	turtle.turnLeft()
 	turtle.turnLeft()
 
-	local y = 1
-	while y <= leny do
+	local y = 0
+	while y < leny do
 
-		local x = 1
-		while x <= lenx do
+		local x = 0
+		while x < lenx do
+
 			back()
-			place()
+
+			if shape[leny-y][x] ~= CHAR_EMPTY then
+				place()
+			end
+
 			x = x + 1
 		end
 
