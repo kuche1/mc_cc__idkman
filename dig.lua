@@ -7,7 +7,7 @@
 -- dig up ?
 -- always use the wrapped movement
 
-local VERSION = 1.5
+local VERSION = 1.7
 
 local FUEL_IND = 16
 local PICKUP_IND = 1
@@ -101,10 +101,12 @@ function dig()
 	while turtle.inspect() do
 		dig_wrapper_pre()
 		local digged, info = turtle.dig()
-		if info == "Nothing to dig here" then
-			break
-		else
-			error("can't dig, reason: "..info)
+		if not digged then
+			if info == "Nothing to dig here" then
+				break
+			else
+				error("can't dig, reason: "..info)
+			end
 		end
 		dig_wrapper_post()
 	end
@@ -114,10 +116,12 @@ function digUp()
 	while turtle.inspectUp() do
 		dig_wrapper_pre()
 		local digged, info = turtle.digUp()
-		if info == "Nothing to dig here" then
-			break
-		else
-			error("can't dig, reason: "..info)
+		if not digged then
+			if info == "Nothing to dig here" then
+				break
+			else
+				error("can't dig, reason: "..info)
+			end
 		end
 		dig_wrapper_post()
 	end
@@ -127,10 +131,12 @@ function digDown()
 	while turtle.inspectDown() do
 		dig_wrapper_pre()
 		local digged, info = turtle.digDown()
-		if info == "Nothing to dig here" then
-			break
-		else
-			error("can't dig, reason: "..info)
+		if not digged then
+			if info == "Nothing to dig here" then
+				break
+			else
+				error("can't dig, reason: "..info)
+			end
 		end
 		dig_wrapper_post()
 	end
@@ -247,7 +253,10 @@ function dig_main(arg)
 	print("digger nigger v"..VERSION)
 
 	local REQUIRED_ARGS = 2
-	
+
+	local optimized_dig_modes = {}
+	optimized_dig_modes["3x1"] = dig_3_1
+
 	if #arg ~= REQUIRED_ARGS then
 		print("bad number of arguments: required "..REQUIRED_ARGS.." given "..#arg)
 		return 1
@@ -256,14 +265,19 @@ function dig_main(arg)
 	local leny = tonumber(arg[1])
 	local lenx = tonumber(arg[2])
 
-	if leny == 3 and lenx == 1 then
-		dig_3_1()
-	else
-		print("pre-optimized mode not found, reverting to default digger")
-		return dig_any_rectangle(leny, lenx)
+	local ind = leny.."x"..lenx
+
+	for k,v in pairs(optimized_dig_modes) do
+		if k == ind then
+			return v()
+		end
 	end
+
+	print("pre-optimized mode not found, reverting to default digger")
+	return dig_any_rectangle(leny, lenx)
 
 end
 
 
 dig_main(arg)
+
