@@ -190,6 +190,8 @@ end
 
 function dig_main(arg)
 
+	print("v1.0.0")
+
 	if #arg ~= 2 then
 		print("bad number of arguments")
 		return 1
