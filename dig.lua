@@ -6,7 +6,7 @@
 -- dig up ?
 -- always use the wrapped movement
 
-local VERSION = 1.9
+local VERSION = 1.10
 
 local FUEL_IND = 16
 local PICKUP_IND = 1
@@ -150,14 +150,18 @@ function forward()
 	end
 end
 
--- refuel
+-- dig 3 1
 
-function refuel_and_ind()
+function dig_3_1()
 
-	turtle.select(FUEL_IND)
-	turtle.refuel()
+	while true do
 
-	turtle.select(PICKUP_IND)
+		digUp()
+		digDown()
+		dig()
+		forward()
+
+	end
 
 end
 
@@ -173,8 +177,6 @@ function dig_any_rectangle(leny, lenx)
 	if leny%2 == 1 then
 		print("warning: odd y values are suboptimal")
 	end
-
-	refuel_and_ind()
 
 	while true do
 
@@ -228,23 +230,6 @@ function dig_any_rectangle(leny, lenx)
 
 end
 
--- dig 3 1
-
-function dig_3_1()
-
-	refuel_and_ind()
-
-	while true do
-
-		digUp()
-		digDown()
-		dig()
-		forward()
-		
-	end
-
-end
-
 -- main
 
 function dig_main(arg)
@@ -276,6 +261,15 @@ function dig_main(arg)
 
 	local leny = tonumber(arg[1])
 	local lenx = tonumber(arg[2])
+
+	if leny == nil or lenx == nil then
+		print("not a number")
+		return 1
+	end
+
+	turtle.select(FUEL_IND)
+	turtle.refuel()
+	turtle.select(PICKUP_IND)
 
 	local ind = leny.."x"..lenx
 
