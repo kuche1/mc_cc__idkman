@@ -33,9 +33,6 @@ function update_a_file(arg_fname)
 end
 
 
-fs.delete("./"..UPDATER_BACKUP)
-fs.copy("./"..UPDATER, "./"..UPDATER_BACKUP)
-
 local i = 1
 
 while i <= #FILES_TO_UPDATE do
@@ -45,5 +42,5 @@ while i <= #FILES_TO_UPDATE do
 end
 
 fs.delete("./"..UPDATER_BACKUP)
-
+fs.copy("./"..UPDATER, "./"..UPDATER_BACKUP)
 
