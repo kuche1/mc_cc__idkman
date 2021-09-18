@@ -22,10 +22,10 @@ function dig(leny, lenx)
 		-- loop
 
 		local y = 1
-		while y < leny
+		while y < leny do
 
 			local x = 1
-			while x < lenx
+			while x < lenx do
 
 				turtle.dig()
 				turtle.forward()
