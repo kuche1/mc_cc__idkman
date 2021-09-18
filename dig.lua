@@ -1,4 +1,7 @@
 
+---- TODO
+-- resource recognition
+
 local FUEL_IND = 16
 
 function dig(leny, lenx)
@@ -8,48 +11,53 @@ function dig(leny, lenx)
 	turtle.select(FUEL_IND)
 	turtle.refill()
 
-	-- init
+	while true do
 
-	turtle.dig()
-	turtle.forward()
-	turtle.digDown()
-	turtle.down()
-	turtle.turnLeft()
+		-- init
 
-	-- loop
-
-	local y = 1
-	while y < leny
-
-		turtle.digUp()
-		turtle.up()
-
-		turtle.turnRight()
-		turtle.turnRight()
-
-		local x = 1
-		while x < lenx
-
-			turtle.dig()
-			turtle.forward()
-
-			x = x + 1
-		end
-		
-		y = y + 1
-	end
-
-	for i=1,leny do
-		turtle.down()
-	end
-
-	if leny%2 == 1 then
-		for i=1,lenx do
-			turtle.back()
-		end
+		turtle.dig()
+		turtle.forward()
 		turtle.turnLeft()
-	else
-		turtle.turnRight()
+
+		-- loop
+
+		local y = 1
+		while y < leny
+
+			turtle.turnRight()
+			turtle.turnRight()
+
+			local x = 1
+			while x < lenx
+
+				turtle.dig()
+				turtle.forward()
+
+				x = x + 1
+			end
+			
+			y = y + 1
+
+			if y ~= leny then
+				turtle.digUp()
+				turtle.up()
+			end
+			
+		end
+
+		for i=1,leny do
+			turtle.down()
+		end
+
+		if leny%2 == 1 then
+			for i=1,lenx do
+				turtle.back()
+			end
+			turtle.turnLeft()
+		else
+			turtle.turnRight()
+		end
+
 	end
 
 
