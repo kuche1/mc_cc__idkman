@@ -88,10 +88,10 @@ function count_blocks(multistring)
 	local count = 0
 	local y = 1
 	while y <= #multistring do
-		local string = multistring[y]
+		local str = multistring[y]
 		local x = 1
-		while x <= #string do
-			local char = string[x]
+		while x <= #str do
+			local char = string.sub(str, x,x)
 			if char ~= CHAR_EMPTY then
 				count = count + 1
 			end
@@ -125,9 +125,10 @@ function build_shape(shape)
 
 	local required_resources = count_blocks(shape)
 	local given_resources = get_given_resources()
-	
+
+	print("required resources: "..required_resources.." given resources: "..given_resources)
 	if given_resources < required_resources then
-		print("not enough resources: needed "..required_resources.." given "..given_resources)
+		print("not enough resources")
 		return 1
 	end
 
@@ -151,7 +152,7 @@ function build_shape(shape)
 
 			back()
 
-			if shape[leny-y][x] ~= CHAR_EMPTY then
+			if string.sub(shape[leny-y], x,x) ~= CHAR_EMPTY then
 				place()
 			end
 
