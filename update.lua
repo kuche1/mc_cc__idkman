@@ -2,7 +2,7 @@
 local UPDATER = "update.lua"
 local UPDATER_BACKUP = "update_old.lua"
 
-local FILES_TO_UPDATE = {"swus.lua", UPDATER}
+local FILES_TO_UPDATE = {"build.lua", "swus.lua", UPDATER}
 
 
 function update_a_file(arg_fname)

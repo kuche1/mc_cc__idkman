@@ -116,7 +116,7 @@ function build_shape(shape)
 	local i = 2
 	while i <= leny do
 		local test_len = #shape[i]
-		if test_len != lenx then
+		if test_len ~= lenx then
 			print("the shape needs to be a rectangle")
 			return 1
 		end
