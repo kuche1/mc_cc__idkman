@@ -67,6 +67,10 @@ function up()
 	turtle.up()
 end
 
+function down()
+	turtle.down()
+end
+
 ---- turtle
 
 function get_given_resources() -- rename to get_available_resources
@@ -123,16 +127,35 @@ function build_shape(shape)
 		i = i + 1
 	end
 
-	local required_resources = count_blocks(shape)
+	-- required blocks
+
+	local required_resources = count_blocks(shape) -- rename to required_blocks
 	local given_resources = get_given_resources()
 
-	print("required resources: "..required_resources.." given resources: "..given_resources)
+	print("blocks: required "..required_resources.." given "..given_resources)
 	if given_resources < required_resources then
-		print("not enough resources")
+		print("not enough blocks")
 		return 1
 	end
 
-	-- refuel
+	-- required fuel (does this work properly?)
+
+	local required_fuel = (lenx+2)*leny +2 +leny +1
+	if leny%2 == 1 then
+		required_fuel = required_fuel + 1
+	else
+		required_fuel = required_fuel + lenx
+	end
+	
+	local given_fuel = turtle.getFuelLevel()
+
+	print("fiel: reqiired "..required_fuel.." given "..given_fuel)
+	if required_fuel > given_fuel then
+		print("not enough fuel")
+		return 1
+	end
+
+	-- indexes
 
 	turtle.select(FUEL_IND)
 	turtle.refuel()
@@ -176,6 +199,30 @@ function build_shape(shape)
 		
 		y = y + 1
 	end
+
+	-- restart position
+
+	if leny%2 == 1 then
+		forward()
+	else
+		turtle.turnLeft()
+		turtle.turnLeft()
+		local i = 1
+		while i <= lenx do
+			print("i="..i.." lenx="..lenx)
+			forward()
+			i = i + 1
+		end
+	end
+
+	local i = 1
+	while i <= leny do
+		print("i="..i.." leny="..leny)
+		down()
+		i = i + 1
+	end
+
+	forward()
 
 end
 
