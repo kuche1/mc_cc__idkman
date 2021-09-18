@@ -60,8 +60,8 @@ function dig(leny, lenx)
 
 	end
 
-
 end
+
 
 function dig_main(arg)
 
