@@ -155,12 +155,10 @@ end
 function dig_3_1()
 
 	while true do
-
 		digUp()
 		digDown()
 		dig()
 		forward()
-
 	end
 
 end
