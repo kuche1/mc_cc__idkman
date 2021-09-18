@@ -2,13 +2,19 @@
 ---- TODO
 -- check if empty
 -- don't stop if in front of lava/water ?
+-- automatically refuel ?
 
 local FUEL_IND = 16
 local PICKUP_IND = 1
 
+local WHITELIST = {
+	"minecraft:coal",
+	"minecraft:iron_ore",
+	"minecraft:redstone",
+}
+
 local BLACKLIST = {
 	"minecraft:andesite",
-	"minecraft:coal",
 	"minecraft:cobblestone",
 	"minecraft:diorite",
 	"minecraft:dirt",
@@ -16,11 +22,6 @@ local BLACKLIST = {
 	"minecraft:gravel",
 	"promenade:blunite",
 	}
-
-local WHITELIST = {
-	"minecraft:iron_ore",
-	"minecraft:redstone",
-}
 
 -- wrapper
 
