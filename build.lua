@@ -211,7 +211,6 @@ function build_shape(shape)
 		turtle.turnLeft()
 		local i = 1
 		while i <= lenx do
-			print("i="..i.." lenx="..lenx)
 			forward()
 			i = i + 1
 		end
@@ -219,7 +218,6 @@ function build_shape(shape)
 
 	local i = 1
 	while i <= leny do
-		print("i="..i.." leny="..leny)
 		down()
 		i = i + 1
 	end
