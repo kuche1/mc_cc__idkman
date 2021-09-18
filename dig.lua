@@ -6,7 +6,7 @@
 -- dig up ?
 -- always use the wrapped movement
 
-local VERSION = 1.8
+local VERSION = 1.9
 
 local FUEL_IND = 16
 local PICKUP_IND = 1
@@ -249,14 +249,17 @@ end
 
 function dig_main(arg)
 
-	print("digger nigger v"..VERSION)
+	print("nig dig v"..VERSION)
 
 	local optimized_dig_modes = {}
 	optimized_dig_modes["3x1"] = dig_3_1
 
 	local a = arg[1]
 	if a == "help" then
+		print("help - this message")
 		print("list - list of optimized modes")
+		print("info: digs a rectangular hole")
+		print("args: <hole size y> <hole size x>")
 		return
 	elseif a == "list" then
 		print("optimized dig modes:")
