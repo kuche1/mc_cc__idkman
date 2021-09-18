@@ -17,7 +17,7 @@ function update_a_file(arg_fname)
 
 	local resp_code = req.getResponseCode()
 	print("file '"..fname.."' response "..resp_code)
-	if resp_code != 200 then
+	if resp_code ~= 200 then
 		error("bad response")
 	end
 
