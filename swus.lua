@@ -48,7 +48,7 @@ function get_given_resources()
 	local i = 1
 	while i < FUEL_IND do
 		turtle.select(i)
-		count += turtle.getItemCount(i)
+		count = count + turtle.getItemCount(i)
 	end
 	
 	return count
