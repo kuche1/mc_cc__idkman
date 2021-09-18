@@ -96,7 +96,10 @@ end
 function dig()
 	while turtle.inspect() do
 		dig_wrapper_pre()
-		turtle.dig()
+		local digged, info = turtle.dig()
+		if info == "Nothing to dig here" then
+			break
+		end
 		dig_wrapper_post()
 	end
 end
@@ -104,7 +107,10 @@ end
 function digUp()
 	while turtle.inspectUp() do
 		dig_wrapper_pre()
-		turtle.digUp()
+		local digged, info = turtle.digUp()
+		if info == "Nothing to dig here" then
+			break
+		end
 		dig_wrapper_post()
 	end
 end
