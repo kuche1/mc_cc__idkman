@@ -9,7 +9,12 @@ local PICKUP_IND = 1
 local BLACKLIST = {
 	"minecraft:dirt",
 	"minecraft:cobblestone",
+	"minecraft:granite",
 	}
+
+local WHITELIST = {
+	"minecraft:iron_ore",
+}
 
 -- wrapper
 
@@ -36,7 +41,18 @@ function dig_wrapper_post()
 		end
 	end
 
-	print("picked up "..name)
+	local in_whitelist = false
+	for i=1,#WHITELIST do
+		local item = WHITELIST[i]
+		if item == name then
+			in_whitelist = true
+			break
+		end
+	end
+
+	if ~in_whitelist then
+		print("picked up "..name)
+	end
 
 	local available = 0
 	for i=1,16 do
