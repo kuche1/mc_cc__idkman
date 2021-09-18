@@ -1,6 +1,7 @@
 
 ---- TODO
 -- check if empty
+-- don't stop if in front of lava/water ?
 
 local FUEL_IND = 16
 local PICKUP_IND = 1
