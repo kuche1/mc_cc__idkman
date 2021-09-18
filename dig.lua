@@ -22,7 +22,7 @@ function dig(leny, lenx)
 		-- loop
 
 		local y = 1
-		while y < leny do
+		while y <= leny do
 
 			print(1)
 
@@ -36,8 +36,6 @@ function dig(leny, lenx)
 			end
 
 			print(2)
-			
-			y = y + 1
 
 			if y ~= leny then
 				print(3)
@@ -46,6 +44,8 @@ function dig(leny, lenx)
 				turtle.turnLeft()
 				turtle.turnLeft()
 			end
+
+			y = y + 1
 			
 		end
 
