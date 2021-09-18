@@ -50,7 +50,7 @@ function dig_wrapper_post()
 		end
 	end
 
-	if ~in_whitelist then
+	if not in_whitelist then
 		print("picked up "..name)
 	end
 
