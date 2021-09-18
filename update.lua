@@ -18,12 +18,14 @@ function update_a_file(arg_fname)
 	local resp_code = req.getResponseCode()
 	print("file '"..fname.."' response "..resp_code)
 	if resp_code ~= 200 then
+		req.close()
 		error("bad response")
 	end
 
 	local data = req.readAll()
 	req.close()
 
+	fs.delete(fname)
 	local f = fs.open(fname, "w")
 	f.write(data)
 	f.close()
