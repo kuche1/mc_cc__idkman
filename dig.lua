@@ -64,7 +64,7 @@ end
 
 function dig_main(arg)
 
-	if #arg ~= 2
+	if #arg ~= 2 then
 		print("bad number of arguments")
 		return 1
 	end
