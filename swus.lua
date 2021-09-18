@@ -73,6 +73,7 @@ function putSwas(arg)
 	
 	local half = math.floor(size / 2)
 
+	print("1")
 	local required_resorces = (half+1)*4 + (size-2)*2 - 1
 	local given_resources = get_given_resources()
 	
