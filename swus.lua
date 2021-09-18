@@ -2,7 +2,7 @@
 ---- TODO
 -- check for fuel
 -- get back down in case of an error
--- calculate the needed amount of resources
+-- calculate the needed amount of fuel
 
 ---- INFO
 -- fuel goes to 16
@@ -42,6 +42,19 @@ function placeDown()
 end
 
 
+function get_given_resources()
+
+	local count = 0
+	local i = 1
+	while i < FUEL_IND do
+		turtle.select(i)
+		count += turtle.getItemCount(i)
+	end
+	
+	return count
+end
+
+
 function putSwas(arg)
 
 	if #arg ~= 1 then
@@ -57,6 +70,14 @@ function putSwas(arg)
 	end
 	
 	local half = math.floor(size / 2)
+
+	local required_resorces = (half+1)*4 + (size-2)*2 - 1
+	local given_resources = get_given_resources()
+	
+	if given_resources < required_resources then
+		print("not enough resources: needed "..required_resources.." given "..given_resources)
+		return 1
+	end
 
 	turtle.select(FUEL_IND)
 	turtle.refuel()
