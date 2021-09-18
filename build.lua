@@ -152,7 +152,17 @@ function build_shape(shape)
 
 			back()
 
-			if string.sub(shape[leny-y], x,x) ~= CHAR_EMPTY then
+			local inx
+
+			if y%2 == 0 then
+				indx = x + 1
+			else
+				indx = lenx-x
+			end
+
+			local indy = leny-y
+
+			if string.sub(shape[indy], indx,indx) ~= CHAR_EMPTY then
 				place()
 			end
 
