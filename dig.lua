@@ -3,6 +3,7 @@
 -- check if empty
 -- don't stop if in front of lava/water ?
 -- automatically refuel ?
+-- resume after the last player has reconnected
 
 local FUEL_IND = 16
 local PICKUP_IND = 1
