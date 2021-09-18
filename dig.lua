@@ -7,13 +7,14 @@ local FUEL_IND = 16
 local PICKUP_IND = 1
 
 local BLACKLIST = {
-	"minecraft:dirt",
 	"minecraft:cobblestone",
+	"minecraft:dirt",
 	"minecraft:granite",
 	}
 
 local WHITELIST = {
 	"minecraft:iron_ore",
+	"minecraft:redstone",
 }
 
 -- wrapper
