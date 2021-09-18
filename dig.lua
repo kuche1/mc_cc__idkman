@@ -17,15 +17,16 @@ function dig(leny, lenx)
 
 		turtle.dig()
 		turtle.forward()
-		turtle.turnLeft()
+		-- turtle.turnLeft()
+		turtle.turnRight()
 
 		-- loop
 
 		local y = 1
 		while y < leny
 
-			turtle.turnRight()
-			turtle.turnRight()
+			--turtle.turnRight()
+			--turtle.turnRight()
 
 			local x = 1
 			while x < lenx
@@ -41,6 +42,8 @@ function dig(leny, lenx)
 			if y ~= leny then
 				turtle.digUp()
 				turtle.up()
+				turtle.turnLeft()
+				turtle.turnLeft()
 			end
 			
 		end
@@ -76,5 +79,6 @@ function dig_main(arg)
 	return dig(leny, lenx)
 	
 end
+
 
 dig_main(arg)
