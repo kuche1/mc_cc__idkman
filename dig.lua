@@ -1,6 +1,6 @@
 
 ---- TODO
--- deal with sand (if sand is above it dissapears)
+-- check if empty
 
 local FUEL_IND = 16
 local PICKUP_IND = 1
@@ -10,6 +10,7 @@ local BLACKLIST = {
 	"minecraft:diorite",
 	"minecraft:dirt",
 	"minecraft:granite",
+	"minecraft:gravel",
 	}
 
 local WHITELIST = {
