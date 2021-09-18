@@ -93,7 +93,7 @@ end
 
 
 function dig()
-	while turtle.inspectUp() do
+	while turtle.inspect() do
 		dig_wrapper_pre()
 		turtle.dig()
 		dig_wrapper_post()
@@ -101,7 +101,7 @@ function dig()
 end
 
 function digUp()
-	while turtle.inspect() do
+	while turtle.inspectUp() do
 		dig_wrapper_pre()
 		turtle.digUp()
 		dig_wrapper_post()
