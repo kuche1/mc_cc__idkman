@@ -4,6 +4,7 @@
 -- don't stop if in front of lava/water ?
 -- automatically refuel ?
 -- resume after the last player has reconnected
+-- dig up ?
 
 local FUEL_IND = 16
 local PICKUP_IND = 1
@@ -139,7 +140,6 @@ function dig_a_hole(leny, lenx)
 
 		local y = 1
 		while y <= leny do
-
 
 			local x = 1
 			while x < lenx do
