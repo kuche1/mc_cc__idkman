@@ -48,6 +48,7 @@ function get_given_resources()
 
 	local i = 1
 	while i < FUEL_IND do
+		print("i is "..i)
 		count = count + turtle.getItemCount(i)
 		i = i + 1
 	end
