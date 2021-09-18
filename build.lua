@@ -140,8 +140,8 @@ function build_shape(shape)
 
 	-- start building
 
-	turnLeft()
-	turnLeft()
+	turtle.turnLeft()
+	turtle.turnLeft()
 
 	local y = 1
 	while y <= leny do
@@ -154,8 +154,8 @@ function build_shape(shape)
 		end
 
 		up()
-		turnLeft()
-		turnLeft()
+		turtle.turnLeft()
+		turtle.turnLeft()
 		back()
 		
 		y = y + 1
