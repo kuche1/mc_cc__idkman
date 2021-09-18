@@ -16,6 +16,7 @@ function update_a_file(arg_fname)
 	fs.delete(fname)
 
 	local req = http.get("https://raw.githubusercontent.com/kuche1/mc_cc__idkman/master/"..arg_fname)
+	print("response: "..req.getResponseCode())
 
 	local data = req.readAll()
 
