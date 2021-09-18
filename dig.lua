@@ -149,7 +149,7 @@ function dig_a_hole(leny, lenx)
 		end
 
 
-		for i=1,leny do
+		for i=1,leny-1 do
 			turtle.down()
 		end
 
