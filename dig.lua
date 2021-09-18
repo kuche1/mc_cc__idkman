@@ -1,13 +1,12 @@
 
 ---- TODO
--- check if empty
--- don't stop if in front of lava/water ?
+-- check if empty ?
 -- automatically refuel ?
--- resume after the last player has reconnected
+-- resume after the last player has reconnected ?
 -- dig up ?
 -- always use the wrapped movement
 
-local VERSION = 1.7
+local VERSION = 1.8
 
 local FUEL_IND = 16
 local PICKUP_IND = 1
@@ -260,6 +259,13 @@ function dig_main(arg)
 	if #arg ~= REQUIRED_ARGS then
 		print("bad number of arguments: required "..REQUIRED_ARGS.." given "..#arg)
 		return 1
+	end
+
+	local a = arg[1]
+	if a == 'help' then
+		print("list - list of optimized modes")
+	elseif a == 'list' then
+		print("optimized dig modes - "..optimized_dig_modes)
 	end
 
 	local leny = tonumber(arg[1])
