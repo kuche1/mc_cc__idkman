@@ -9,7 +9,7 @@ function dig(leny, lenx)
 	-- fuel refill
 
 	turtle.select(FUEL_IND)
-	turtle.refill()
+	turtle.refuel()
 
 	while true do
 
