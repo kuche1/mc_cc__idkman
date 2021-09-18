@@ -13,7 +13,7 @@ function update_a_file(arg_fname)
 
 	local fname = "./"..arg_fname
 
-	fs.delete(fname)
+	--fs.delete(fname)
 
 	local req = http.get("https://raw.githubusercontent.com/kuche1/mc_cc__idkman/master/"..arg_fname)
 
