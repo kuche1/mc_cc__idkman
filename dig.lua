@@ -1,7 +1,6 @@
 
 ---- TODO
--- resource recognition
--- check if empty
+-- deal with sand
 
 local FUEL_IND = 16
 local PICKUP_IND = 1
