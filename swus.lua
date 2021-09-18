@@ -51,7 +51,7 @@ function get_given_resources()
 		count = count + turtle.getItemCount(i)
 		i = i + 1
 	end
-	
+
 	return count
 end
 
