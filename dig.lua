@@ -10,8 +10,9 @@ local PICKUP_IND = 1
 local WHITELIST = {
 	"minecraft:coal",
 	"minecraft:iron_ore",
+	"minecraft:obsidian",
 	"minecraft:redstone",
-}
+	}
 
 local BLACKLIST = {
 	"minecraft:andesite",
