@@ -1,8 +1,4 @@
 
----- TODO
--- backup the old updater
-
-
 local UPDATER = "update.lua"
 local UPDATER_BACKUP = "update_old.lua"
 
