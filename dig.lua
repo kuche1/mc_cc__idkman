@@ -5,8 +5,9 @@
 -- automatically refuel ?
 -- resume after the last player has reconnected
 -- dig up ?
+-- always use the wrapped movement
 
-local VERSION = 1.3
+local VERSION = 1.4
 
 local FUEL_IND = 16
 local PICKUP_IND = 1
@@ -30,7 +31,7 @@ local BLACKLIST = {
 	"promenade:blunite",
 	}
 
--- wrapper
+-- wrapper dig
 
 function dig_wrapper_pre()
 	if turtle.getItemCount() ~= 0 then
@@ -117,6 +118,26 @@ function digUp()
 	end
 end
 
+function digDown()
+	while turtle.inspectDown() do
+		dig_wrapper_pre()
+		local digged, info = turtle.digDown()
+		if info == "Nothing to dig here" then
+			break
+		end
+		dig_wrapper_post()
+	end
+end
+
+-- wrapper move
+
+function forward()
+	local moved, reason = turtle.forward()
+	if not moved then
+		error("can't move, reason: "..reason)
+	end
+end
+
 -- refuel
 
 function refuel_and_ind()
@@ -125,8 +146,6 @@ function refuel_and_ind()
 	turtle.refuel()
 
 	turtle.select(PICKUP_IND)
-
-	refuel()
 
 end
 
@@ -208,7 +227,7 @@ function dig_3_1()
 		digUp()
 		digDown()
 		dig()
-		turtle.forward()
+		forward()
 		
 	end
 
@@ -230,8 +249,13 @@ function dig_main(arg)
 	local leny = tonumber(arg[1])
 	local lenx = tonumber(arg[2])
 
-	return dig_any_rectangle(leny, lenx)
-	
+	if leny == 3 and lenx == 1 then
+		dig_3_1()
+	else
+		print("pre-optimized mode not found, reverting to default digger")
+		return dig_any_rectangle(leny, lenx)
+	end
+
 end
 
 
