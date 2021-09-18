@@ -138,6 +138,11 @@ function build_shape(shape)
 		return 1
 	end
 
+	-- refuel
+
+	turtle.select(FUEL_IND)
+	turtle.refuel()
+
 	-- required fuel (does this work properly?)
 
 	local required_fuel = (lenx+2)*leny +2 +leny +1
@@ -155,10 +160,7 @@ function build_shape(shape)
 		return 1
 	end
 
-	-- indexes
-
-	turtle.select(FUEL_IND)
-	turtle.refuel()
+	-- select 1st index
 
 	turtle.select(1)
 
