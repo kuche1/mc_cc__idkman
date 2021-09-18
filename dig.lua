@@ -109,6 +109,11 @@ end
 
 function dig_a_hole(leny, lenx)
 
+	if leny <= 0 or lenx <= 0 then
+		print("you can't use negative values or 0")
+		return 1
+	end
+
 	if leny%2 == 1 then
 		print("warning: odd y values are suboptimal")
 	end
