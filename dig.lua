@@ -3,8 +3,56 @@ local FUEL_IND = 16
 
 function dig(leny, lenx)
 
+	-- fuel refill
+
 	turtle.select(FUEL_IND)
-	
+	turtle.refill()
+
+	-- init
+
+	turtle.dig()
+	turtle.forward()
+	turtle.digDown()
+	turtle.down()
+	turtle.turnLeft()
+
+	-- loop
+
+	local y = 1
+	while y < leny
+
+		turtle.digUp()
+		turtle.up()
+
+		turtle.turnRight()
+		turtle.turnRight()
+
+		local x = 1
+		while x < lenx
+
+			turtle.dig()
+			turtle.forward()
+
+			x = x + 1
+		end
+		
+		y = y + 1
+	end
+
+	for i=1,leny do
+		turtle.down()
+	end
+
+	if leny%2 == 1 then
+		for i=1,lenx do
+			turtle.back()
+		end
+		turtle.turnLeft()
+	else
+		turtle.turnRight()
+	end
+
+
 end
 
 function dig_main(arg)
