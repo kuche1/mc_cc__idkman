@@ -7,7 +7,7 @@
 -- dig up ?
 -- always use the wrapped movement
 
-local VERSION = 1.4
+local VERSION = 1.5
 
 local FUEL_IND = 16
 local PICKUP_IND = 1
@@ -28,6 +28,7 @@ local BLACKLIST = {
 	"minecraft:dirt",
 	"minecraft:granite",
 	"minecraft:gravel",
+	"minecraft:wheat_seeds",
 	"promenade:blunite",
 	}
 
@@ -102,6 +103,8 @@ function dig()
 		local digged, info = turtle.dig()
 		if info == "Nothing to dig here" then
 			break
+		else
+			error("can't dig, reason: "..info)
 		end
 		dig_wrapper_post()
 	end
@@ -113,6 +116,8 @@ function digUp()
 		local digged, info = turtle.digUp()
 		if info == "Nothing to dig here" then
 			break
+		else
+			error("can't dig, reason: "..info)
 		end
 		dig_wrapper_post()
 	end
@@ -124,6 +129,8 @@ function digDown()
 		local digged, info = turtle.digDown()
 		if info == "Nothing to dig here" then
 			break
+		else
+			error("can't dig, reason: "..info)
 		end
 		dig_wrapper_post()
 	end
