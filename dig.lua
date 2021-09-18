@@ -251,21 +251,24 @@ function dig_main(arg)
 
 	print("digger nigger v"..VERSION)
 
-	local REQUIRED_ARGS = 2
-
 	local optimized_dig_modes = {}
 	optimized_dig_modes["3x1"] = dig_3_1
 
-	if #arg ~= REQUIRED_ARGS then
-		print("bad number of arguments: required "..REQUIRED_ARGS.." given "..#arg)
-		return 1
+	local a = arg[1]
+	if a == "help" then
+		print("list - list of optimized modes")
+		return
+	elseif a == "list" then
+		print("optimized dig modes:")
+		for k,v in pairs(optimized_dig_modes) do
+			print(k)
+		end
+		return
 	end
 
-	local a = arg[1]
-	if a == 'help' then
-		print("list - list of optimized modes")
-	elseif a == 'list' then
-		print("optimized dig modes - "..optimized_dig_modes)
+	if #arg ~= 2 then
+		print("required arguments: y, x")
+		return 1
 	end
 
 	local leny = tonumber(arg[1])
