@@ -1,12 +1,12 @@
 
 ---- TODO
--- check if empty ?
+-- check if fuel empty ?
 -- automatically refuel ?
 -- resume after the last player has reconnected ?
--- dig up ?
+-- any rect: dig up ?
 -- always use the wrapped movement
 
-local VERSION = 1.10
+local VERSION = 1.12
 
 local FUEL_IND = 16
 local PICKUP_IND = 1
@@ -272,7 +272,6 @@ function dig_main(arg)
 	turtle.select(PICKUP_IND)
 
 	local ind = leny.."x"..lenx
-
 	for k,v in pairs(optimized_dig_modes) do
 		if k == ind then
 			return v()
