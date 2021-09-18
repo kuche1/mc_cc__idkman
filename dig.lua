@@ -6,6 +6,8 @@
 -- resume after the last player has reconnected
 -- dig up ?
 
+local VERSION = 1.3
+
 local FUEL_IND = 16
 local PICKUP_IND = 1
 
@@ -115,7 +117,20 @@ function digUp()
 	end
 end
 
--- freedig
+-- refuel
+
+function refuel_and_ind()
+
+	turtle.select(FUEL_IND)
+	turtle.refuel()
+
+	turtle.select(PICKUP_IND)
+
+	refuel()
+
+end
+
+-- dig any rect
 
 function dig_any_rectangle(leny, lenx)
 
@@ -128,12 +143,7 @@ function dig_any_rectangle(leny, lenx)
 		print("warning: odd y values are suboptimal")
 	end
 
-	-- fuel refill
-
-	turtle.select(FUEL_IND)
-	turtle.refuel()
-
-	turtle.select(PICKUP_IND)
+	refuel_and_ind()
 
 	while true do
 
@@ -187,13 +197,33 @@ function dig_any_rectangle(leny, lenx)
 
 end
 
+-- dig 3 1
+
+function dig_3_1()
+
+	refuel_and_ind()
+
+	while true do
+
+		digUp()
+		digDown()
+		dig()
+		turtle.forward()
+		
+	end
+
+end
+
+-- main
 
 function dig_main(arg)
 
-	print("v1.0.1")
+	print("digger nigger v"..VERSION)
 
-	if #arg ~= 2 then
-		print("bad number of arguments")
+	local REQUIRED_ARGS = 2
+	
+	if #arg ~= REQUIRED_ARGS then
+		print("bad number of arguments: required "..REQUIRED_ARGS.." given "..#arg)
 		return 1
 	end
 
