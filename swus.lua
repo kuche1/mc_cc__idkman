@@ -48,13 +48,7 @@ function get_given_resources()
 
 	local i = 1
 	while i < FUEL_IND do
-		print("i is "..i)
-		
-		local cnt = turtle.getItemCount(i)
-		if cnt ~= nil then
-			count = count + cnt
-		end
-		
+		count = count + turtle.getItemCount(i)
 		i = i + 1
 	end
 
@@ -78,7 +72,7 @@ function putSwas(arg)
 	
 	local half = math.floor(size / 2)
 
-	local required_resorces = (half+1)*4 + (size-2)*2 - 1
+	local required_resources = (half+1)*4 + (size-2)*2 - 1
 	local given_resources = get_given_resources()
 	
 	if given_resources < required_resources then
