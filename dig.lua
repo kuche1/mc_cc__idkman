@@ -115,9 +115,9 @@ function digUp()
 	end
 end
 
---
+-- freedig
 
-function dig_a_hole(leny, lenx)
+function dig_any_rectangle(leny, lenx)
 
 	if leny <= 0 or lenx <= 0 then
 		print("you can't use negative values or 0")
@@ -190,7 +190,7 @@ end
 
 function dig_main(arg)
 
-	print("v1.0.0")
+	print("v1.0.1")
 
 	if #arg ~= 2 then
 		print("bad number of arguments")
@@ -200,7 +200,7 @@ function dig_main(arg)
 	local leny = tonumber(arg[1])
 	local lenx = tonumber(arg[2])
 
-	return dig_a_hole(leny, lenx)
+	return dig_any_rectangle(leny, lenx)
 	
 end
 
