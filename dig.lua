@@ -3,10 +3,10 @@
 -- check if fuel empty ?
 -- automatically refuel ?
 -- resume after the last player has reconnected ?
--- any rect: dig down ?
 -- always use the wrapped movement
+-- optimize any rect
 
-local VERSION = "v2.1 beta"
+local VERSION = "v2.1"
 
 local FUEL_IND = 16
 local PICKUP_IND = 1
