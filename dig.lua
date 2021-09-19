@@ -1,12 +1,9 @@
 
 ---- TODO
--- check if fuel empty ?
 -- automatically refuel ?
 -- resume after the last player has reconnected ?
--- always use the wrapped movement
--- optimize any rect
 
-local VERSION = "v2.1"
+local VERSION = "v2.6"
 
 local FUEL_IND = 16
 local PICKUP_IND = 1
@@ -30,6 +27,19 @@ local BLACKLIST = {
 	"minecraft:wheat_seeds",
 	"promenade:blunite",
 	}
+
+-- globals
+
+local dbg = false
+local opt = false
+
+-- echo
+
+function echo(msg)
+	if dbg then
+		print(msg)
+	end
+end
 
 -- wrapper dig
 
@@ -141,20 +151,54 @@ function digDown()
 	end
 end
 
+function opt_dig_all()
+	if opt then
+		digDown()
+		dig()
+		digUp()
+	end
+
+end
+
 -- wrapper move
 
 function move_wrapper(moved, reason)
 	if not moved then
 		error("can't move, reason: "..reason)
 	end
+
 end
 
 function forward()
+	opt_dig_all()
 	move_wrapper(turtle.forward())
+	opt_dig_all()
 end
 
 function up()
+	opt_dig_all()
 	move_wrapper(turtle.up())
+	opt_dig_all()
+end
+
+function down()
+	opt_dig_all()
+	move_wrapper(turtle.down())
+	opt_dig_all()
+end
+
+-- wrapper turn
+
+function turnLeft()
+	opt_dig_all()
+	turtle.turnLeft()
+	opt_dig_all()
+end
+
+function turnRight()
+	opt_dig_all()
+	turtle.turnRight()
+	opt_dig_all()
 end
 
 -- dig 3 1
@@ -186,13 +230,21 @@ function dig_any_rectangle(leny, lenx)
 
 	local y_loops = leny/3
 
+	local iteration = 1
 	while true do
 
 		-- init
 
 		dig()
 		forward()
-		turtle.turnRight()
+		echo("init it="..iteration.." yl="..y_loops)
+		if iteration%2 == 0 and y_loops%2 == 1 then
+			echo("Left")
+			turnLeft()
+		else
+			echo("right")
+			turnRight()
+		end
 
 		-- loop
 
@@ -208,30 +260,40 @@ function dig_any_rectangle(leny, lenx)
 			end
 
 			if y ~= y_loops then
-				up()
-				digUp()
-				up()
-				digUp()
-				up()
-				turtle.turnLeft()
-				turtle.turnLeft()
+
+				local movement
+				local directional_dig
+
+				if iteration%2 == 1 then
+					movement = up
+					directional_dig = digUp
+				else
+					movement = down
+					directional_dig = digDown
+				end
+
+				for i=1,2 do
+					movement()
+					directional_dig()
+				end
+				movement()
+				
+				turnLeft()
+				turnLeft()
 			end
 
 		end
 
-		for i=1,leny-3 do
-			turtle.down()
-		end
-
-		if y_loops%2 == 1 then
-			for i=1,lenx-1 do
-				turtle.back()
-			end
-			turtle.turnLeft()
+		echo("end it="..iteration.." yl="..y_loops)
+		if y_loops%2 == 1 and iteration%2 == 1 then
+			echo("left")
+			turnLeft()
 		else
-			turtle.turnRight()
+			echo("right")
+			turnRight()
 		end
 
+		iteration = iteration + 1
 	end
 
 end
@@ -242,6 +304,9 @@ function dig_main(arg)
 
 	print("nig dig "..VERSION)
 
+	local arg_debug = "dbg"
+	local arg_optimize = "opt"
+
 	local optimized_dig_modes = {}
 	optimized_dig_modes["3x1"] = dig_3_1
 
@@ -250,7 +315,8 @@ function dig_main(arg)
 		print("help - this message")
 		print("list - list of optimized modes")
 		print("info: digs a rectangular hole")
-		print("args: <hole size y> <hole size x>")
+		print("args: <{int} - hole size y> <{int} - hole size x>")
+		print("optional args: ["..arg_debug.." - enable debug output] ["..arg_optimize.." - optimize mining, may deform the rectangle]")
 		return
 	elseif a == "list" then
 		print("optimized dig modes:")
@@ -260,7 +326,7 @@ function dig_main(arg)
 		return
 	end
 
-	if #arg ~= 2 then
+	if #arg < 2 then
 		print("required arguments: y, x")
 		return 1
 	end
@@ -271,6 +337,21 @@ function dig_main(arg)
 	if leny == nil or lenx == nil then
 		print("not a number")
 		return 1
+	end
+
+	dbg = false
+	opt = false
+
+	for i=3,#arg do
+		local a = arg[i]
+		if a == arg_debug then
+			dbg = true
+		elseif a == arg_optimize then
+			opt = true
+		else
+			print("unknown argument: "..a)
+			return 1
+		end
 	end
 
 	turtle.select(FUEL_IND)
