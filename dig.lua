@@ -3,7 +3,7 @@
 -- automatically refuel ?
 -- resume after the last player has reconnected ?
 
-local VERSION = "v2.8.0"
+local VERSION = "v2.8.1"
 
 local FUEL_IND = 16
 local PICKUP_IND = 1
@@ -28,7 +28,7 @@ local BLACKLIST = {
 	"minecraft:granite",
 	"minecraft:gravel",
 	"minecraft:magma_block",
-	"minecraft:naitilus_shell",
+	"minecraft:nautilus_shell",
 	"minecraft:wheat_seeds",
 	"promenade:carbonite",
 	"promenade:blunite",
