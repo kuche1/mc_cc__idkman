@@ -3,7 +3,7 @@
 -- automatically refuel ?
 -- resume after the last player has reconnected ?
 
-local VERSION = "v2.7.2"
+local VERSION = "v2.8.0"
 
 local FUEL_IND = 16
 local PICKUP_IND = 1
@@ -27,6 +27,8 @@ local BLACKLIST = {
 	"minecraft:dirt",
 	"minecraft:granite",
 	"minecraft:gravel",
+	"minecraft:magma_block",
+	"minecraft:naitilus_shell",
 	"minecraft:wheat_seeds",
 	"promenade:carbonite",
 	"promenade:blunite",
@@ -168,6 +170,8 @@ end
 
 function move_wrapper(moved, reason)
 	if not moved then
+		-- what if ? reason == "Movement obstructed"
+		-- what if ? reason == "Out of fuel"
 		error("can't move, reason: "..reason)
 	end
 
