@@ -6,7 +6,7 @@
 -- any rect: dig up ?
 -- always use the wrapped movement
 
-local VERSION = 1.13
+local VERSION = "v2.0"
 
 local FUEL_IND = 16
 local PICKUP_IND = 1
@@ -143,11 +143,18 @@ end
 
 -- wrapper move
 
-function forward()
-	local moved, reason = turtle.forward()
+function move_wrapper(moved, reason)
 	if not moved then
 		error("can't move, reason: "..reason)
 	end
+end
+
+function forward()
+	move_wrapper(turtle.forward())
+end
+
+function up()
+	move_wrapper(turtle.up())
 end
 
 -- dig 3 1
@@ -173,41 +180,40 @@ function dig_any_rectangle(leny, lenx)
 	end
 
 	if leny%2 == 1 then
-		print("warning: odd y values are suboptimal")
+		print("y needs to be even")
+		return 1
 	end
+
+	local half_leny = leny/2
 
 	while true do
 
 		-- init
 
 		dig()
-		turtle.forward()
+		forward()
 		turtle.turnRight()
 
 		-- loop
 
-		--local y = 1
-		--while y <= leny do
-		for y=1,leny
+		for y=1,half_leny do
 
-			--local x = 1
-			--while x < lenx do
-			for x=1,lenx-1
-
-				dig()
-				turtle.forward()
-
-				--x = x + 1
-			end
-
-			if y ~= leny then
+			for x=1,lenx do
 				digUp()
-				turtle.up()
+				if x ~= lenx then
+					dig()
+					forward()
+				end
+			end
+
+			if y ~= half_leny then
+				up()
+				digUp()
+				up()
 				turtle.turnLeft()
 				turtle.turnLeft()
 			end
 
-			--y = y + 1
 		end
 
 
@@ -215,15 +221,14 @@ function dig_any_rectangle(leny, lenx)
 			turtle.down()
 		end
 
-		if leny%2 == 1 then
-			for i=1,lenx do
+		if half_leny%2 == 1 then
+			for i=1,lenx-1 do
 				turtle.back()
 			end
 			turtle.turnLeft()
 		else
 			turtle.turnRight()
 		end
-
 
 	end
 
@@ -233,7 +238,7 @@ end
 
 function dig_main(arg)
 
-	print("nig dig v"..VERSION)
+	print("nig dig "..VERSION)
 
 	local optimized_dig_modes = {}
 	optimized_dig_modes["3x1"] = dig_3_1
