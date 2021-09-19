@@ -3,13 +3,15 @@
 -- automatically refuel ?
 -- resume after the last player has reconnected ?
 
-local VERSION = "v2.7"
+local VERSION = "v2.7.1"
 
 local FUEL_IND = 16
 local PICKUP_IND = 1
 
 local WHITELIST = {
 	"minecraft:coal",
+	"minecraft:diamond",
+	"minecraft:flint",
 	"minecraft:gold_ore",
 	"minecraft:iron_ore",
 	"minecraft:obsidian",
