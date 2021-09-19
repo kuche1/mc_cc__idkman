@@ -179,12 +179,12 @@ function dig_any_rectangle(leny, lenx)
 		return 1
 	end
 
-	if leny%3 ~= 0 then
-		print("y needs to be divisable by 3")
+	if leny%2 == 1 then
+		print("y needs to be even")
 		return 1
 	end
 
-	local y_loops = leny/3
+	local half_leny = leny/2
 
 	while true do
 
@@ -196,20 +196,17 @@ function dig_any_rectangle(leny, lenx)
 
 		-- loop
 
-		for y=1,y_loops do
+		for y=1,half_leny do
 
 			for x=1,lenx do
 				digUp()
-				digDown()
 				if x ~= lenx then
 					dig()
 					forward()
 				end
 			end
 
-			if y ~= y_loops then
-				up()
-				digUp()
+			if y ~= half_leny then
 				up()
 				digUp()
 				up()
@@ -219,11 +216,12 @@ function dig_any_rectangle(leny, lenx)
 
 		end
 
-		for i=1,leny-3 do
+
+		for i=1,leny-2 do
 			turtle.down()
 		end
 
-		if y_loops%2 == 1 then
+		if half_leny%2 == 1 then
 			for i=1,lenx-1 do
 				turtle.back()
 			end
