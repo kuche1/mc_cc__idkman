@@ -6,7 +6,7 @@
 -- any rect: dig up ?
 -- always use the wrapped movement
 
-local VERSION = 1.12
+local VERSION = 1.13
 
 local FUEL_IND = 16
 local PICKUP_IND = 1
@@ -186,16 +186,18 @@ function dig_any_rectangle(leny, lenx)
 
 		-- loop
 
-		local y = 1
-		while y <= leny do
+		--local y = 1
+		--while y <= leny do
+		for y=1,leny
 
-			local x = 1
-			while x < lenx do
+			--local x = 1
+			--while x < lenx do
+			for x=1,lenx-1
 
 				dig()
 				turtle.forward()
 
-				x = x + 1
+				--x = x + 1
 			end
 
 			if y ~= leny then
@@ -205,8 +207,7 @@ function dig_any_rectangle(leny, lenx)
 				turtle.turnLeft()
 			end
 
-			y = y + 1
-			
+			--y = y + 1
 		end
 
 
