@@ -2,7 +2,7 @@
 ---- TODO
 -- automatically refuel ?
 -- resume after the last player has reconnected ?
--- allow any y values grater than 3
+-- allow any y values grater than 3 ?
 
 local VERSION = "3.1.0 beta"
 
@@ -66,7 +66,7 @@ function dig_wrapper_post()
 	end
 
 	local name = item.name
-	
+
 	for i=1,#BLACKLIST do
 		local item = BLACKLIST[i]
 		if item == name then
@@ -248,6 +248,18 @@ function dig_any_rectangle(leny, lenx)
 	local y_loops = leny/3
 
 	local chuckloader_item_name = turtle.getItemDetail(CHUNKLOADER_IND).name
+	if turtle.getItemCount(CHUNKLOADER_IND) < 2 then
+		print("You need to provide at least 2 chunk loaders")
+		return 1
+	end
+
+	-- this is ugly
+	turnLeft()
+	turnLeft()
+	turtle.select(CHUNKLOADER_IND)
+	turtle.place()
+	turnLeft()
+	turnLeft()
 
 	local iteration = 1
 	while true do
@@ -319,13 +331,16 @@ function dig_any_rectangle(leny, lenx)
 		dig()
 		forward()
 		turtle.select(CHUNKLOADER_IND)
-		turtle.dig() -- TODO handle bad cases
-		if turtle.getItemDetail().name != chuckloader_item_name then
-			print("I should have digged a chunk loader here, something fucked up")
-			return 1
+
+		if turtle.inspect().name == chuckloader_item_name then
+			turtle.dig()
+		else
+			dig()
 		end
+		
 		back()
 		back()
+
 		if turtle.getItemCount() == 0 then
 			print("No chunk loaders left")
 			return 1
