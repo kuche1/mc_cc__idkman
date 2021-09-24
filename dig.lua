@@ -4,7 +4,7 @@
 -- resume after the last player has reconnected ?
 -- allow any y values grater than 3
 
-local VERSION = "3.0.0 beta"
+local VERSION = "3.1.0 beta"
 
 local FUEL_IND = 16
 local CHUNKLOADER_IND = 15
@@ -247,6 +247,8 @@ function dig_any_rectangle(leny, lenx)
 
 	local y_loops = leny/3
 
+	local chuckloader_item_name = turtle.getItemDetail(CHUNKLOADER_IND).name
+
 	local iteration = 1
 	while true do
 
@@ -316,10 +318,18 @@ function dig_any_rectangle(leny, lenx)
 		forward()
 		dig()
 		forward()
-		turtle.select(CHUNKLOADER_IND) -- TODO check if empty
+		turtle.select(CHUNKLOADER_IND)
 		turtle.dig() -- TODO handle bad cases
+		if turtle.getItemDetail().name != chuckloader_item_name then
+			print("I should have digged a chunk loader here, something fucked up")
+			return 1
+		end
 		back()
 		back()
+		if turtle.getItemCount() == 0 then
+			print("No chunk loaders left")
+			return 1
+		end
 		turtle.place()
 
 		-- look forward
