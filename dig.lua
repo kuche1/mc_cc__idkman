@@ -3,9 +3,10 @@
 -- automatically refuel ?
 -- resume after the last player has reconnected ?
 
-local VERSION = "v2.8.1"
+local VERSION = "3.0.0 beta"
 
 local FUEL_IND = 16
+local CHUNKLOADER_IND = 15
 local PICKUP_IND = 1
 
 local WHITELIST = {
@@ -50,6 +51,7 @@ end
 -- wrapper dig
 
 function dig_wrapper_pre()
+	turtle.select(PICKUP_IND)
 	if turtle.getItemCount() ~= 0 then
 		error("pickup field not empty")
 	end
@@ -87,7 +89,7 @@ function dig_wrapper_post()
 
 	local available = 0
 	for i=1,16 do
-		if i ~= PICKUP_IND then
+		if i ~= PICKUP_IND and i ~= CHUCKLOADER_IND then
 			local item = turtle.getItemDetail(i)
 			if item == nil then
 				available = i
@@ -183,6 +185,12 @@ function forward()
 	opt_dig_all()
 end
 
+function back()
+	opt_dig_all()
+	move_wrapper(turtle.back())
+	opt_dig_all()
+end
+
 function up()
 	opt_dig_all()
 	move_wrapper(turtle.up())
@@ -247,10 +255,10 @@ function dig_any_rectangle(leny, lenx)
 		forward()
 		echo("init it="..iteration.." yl="..y_loops)
 		if iteration%2 == 0 and y_loops%2 == 1 then
-			echo("Left")
+			echo("turning left")
 			turnLeft()
 		else
-			echo("right")
+			echo("turning right")
 			turnRight()
 		end
 
@@ -292,14 +300,33 @@ function dig_any_rectangle(leny, lenx)
 
 		end
 
+		-- look back
+
 		echo("end it="..iteration.." yl="..y_loops)
 		if y_loops%2 == 1 and iteration%2 == 1 then
-			echo("left")
-			turnLeft()
-		else
-			echo("right")
 			turnRight()
+		else
+			turnLeft()
 		end
+
+		-- place chunk loader
+
+		dig()
+		forward()
+		dig()
+		forward()
+		turtle.select(CHUNKLOADER_IND) -- TODO check if empty
+		turtle.dig() -- TODO handle bad cases
+		back()
+		back()
+		turtle.place()
+
+		-- look forward
+
+		turnLeft()
+		turnLeft()
+
+		-- end
 
 		iteration = iteration + 1
 	end
@@ -310,7 +337,7 @@ end
 
 function dig_main(arg)
 
-	print("nig dig "..VERSION)
+	print("nig dig version "..VERSION)
 
 	local arg_debug = "dbg"
 	local arg_optimize = "opt"
@@ -322,7 +349,7 @@ function dig_main(arg)
 	if a == "help" then
 		print("help - this message")
 		print("list - list of optimized modes")
-		print("info: digs a rectangular hole")
+		print("info: digs a rectangular hole; fuel goes to "..FUEL_IND.." and chunk loader goes to "..CHUNKLOADER_IND)
 		print("args: <{int} - hole size y> <{int} - hole size x>")
 		print("optional args: ["..arg_debug.." - enable debug output] ["..arg_optimize.." - optimize mining, may deform the rectangle]")
 		return
