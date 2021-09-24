@@ -2,6 +2,7 @@
 ---- TODO
 -- automatically refuel ?
 -- resume after the last player has reconnected ?
+-- allow any y values grater than 3
 
 local VERSION = "3.0.0 beta"
 
