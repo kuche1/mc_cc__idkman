@@ -5,7 +5,7 @@
 -- allow any y values grater than 3 ?
 -- check if no chunkloader ?
 
-local VERSION = "3.1.2 beta"
+local VERSION = "3.1.3"
 
 local FUEL_IND = 16
 local CHUNKLOADER_IND = 15
@@ -36,7 +36,9 @@ local BLACKLIST = {
 	"minecraft:wheat_seeds",
 	"pixelmon:amethyst",
 	"pixelmon:crystal",
+	"pixelmon:ruby",
 	"pixelmon:sapphire",
+	"pixelmon:silicon_ore",
 	"promenade:carbonite",
 	"promenade:blunite",
 	}
