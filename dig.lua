@@ -3,8 +3,9 @@
 -- automatically refuel ?
 -- resume after the last player has reconnected ?
 -- allow any y values grater than 3 ?
+-- check if no chunkloader ?
 
-local VERSION = "3.1.1 beta"
+local VERSION = "3.1.2 beta"
 
 local FUEL_IND = 16
 local CHUNKLOADER_IND = 15
@@ -31,7 +32,11 @@ local BLACKLIST = {
 	"minecraft:gravel",
 	"minecraft:magma_block",
 	"minecraft:nautilus_shell",
+	"minecraft:stone",
 	"minecraft:wheat_seeds",
+	"pixelmon:amethyst",
+	"pixelmon:crystal",
+	"pixelmon:sapphire",
 	"promenade:carbonite",
 	"promenade:blunite",
 	}
@@ -90,7 +95,7 @@ function dig_wrapper_post()
 
 	local available = 0
 	for i=1,16 do
-		if i ~= PICKUP_IND and i ~= CHUCKLOADER_IND then
+		if i ~= PICKUP_IND and i ~= CHUNKLOADER_IND then
 			local item = turtle.getItemDetail(i)
 			if item == nil then
 				available = i
