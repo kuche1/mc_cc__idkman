@@ -4,7 +4,7 @@
 -- resume after the last player has reconnected ?
 -- allow any y values grater than 3 ?
 
-local VERSION = "3.1.0 beta"
+local VERSION = "3.1.1 beta"
 
 local FUEL_IND = 16
 local CHUNKLOADER_IND = 15
@@ -332,7 +332,8 @@ function dig_any_rectangle(leny, lenx)
 		forward()
 		turtle.select(CHUNKLOADER_IND)
 
-		if turtle.inspect().name == chuckloader_item_name then
+		local has_block, data = turtle.inspect()
+		if has_block and data.name == chuckloader_item_name then
 			turtle.dig()
 		else
 			dig()
