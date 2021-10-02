@@ -7,7 +7,7 @@
 -- put the chunkloader in the middle !
 -- create a wrapper for place !
 
-local VERSION = "3.1.6"
+local VERSION = "3.1.7"
 
 local FUEL_IND = 16
 local CHUNKLOADER_IND = 15
@@ -342,7 +342,8 @@ function dig_any_rectangle(leny, lenx)
 		forward()
 
 		local has_block, data = turtle.inspect()
-		if has_block and data.name == chuckloader_item_name then
+		if has_block and data.name == chuckloader_item_name then -- todo move to dig() function
+			turtle.select(CHUNKLOADER_IND)
 			turtle.dig()
 		else
 			dig()
