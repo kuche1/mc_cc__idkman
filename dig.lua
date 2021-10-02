@@ -5,8 +5,9 @@
 -- allow any y values grater than 3 ?
 -- check if no chunkloader ?
 -- put the chunkloader in the middle !
+-- create a wrapper for place !
 
-local VERSION = "3.1.5"
+local VERSION = "3.1.6"
 
 local FUEL_IND = 16
 local CHUNKLOADER_IND = 15
@@ -339,7 +340,6 @@ function dig_any_rectangle(leny, lenx)
 		forward()
 		dig()
 		forward()
-		turtle.select(CHUNKLOADER_IND)
 
 		local has_block, data = turtle.inspect()
 		if has_block and data.name == chuckloader_item_name then
@@ -351,10 +351,11 @@ function dig_any_rectangle(leny, lenx)
 		back()
 		back()
 
-		if turtle.getItemCount() == 0 then
+		if turtle.getItemCount(CHUNKLOADER_IND) == 0 then
 			print("No chunk loaders left")
 			return 1
 		end
+		turtle.select(CHUNKLOADER_IND)
 		turtle.place()
 
 		-- look forward
