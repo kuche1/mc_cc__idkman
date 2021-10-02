@@ -4,8 +4,9 @@
 -- resume after the last player has reconnected ?
 -- allow any y values grater than 3 ?
 -- check if no chunkloader ?
+-- put the chunkloader in the middle !
 
-local VERSION = "3.1.4"
+local VERSION = "3.1.5"
 
 local FUEL_IND = 16
 local CHUNKLOADER_IND = 15
