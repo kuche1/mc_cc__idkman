@@ -63,13 +63,17 @@ function echo(msg)
 end
 
 function error_msg(msg)
-	local status, error = pcall(function() error(msg, 2) end)
+	local status, data = pcall(function() error(msg, 4) end)
+
+	print(data)
 	
-	local f = fs.open("error_log")
-	f.write(error)
+	local f = fs.open("error_log", "w")
+	f.write(os.date())
+	f.write("\n")
+	f.write(data)
 	f.close()
 
-	error(msg, 1)
+	error(msg, 2)
 end
 
 -- backpack
