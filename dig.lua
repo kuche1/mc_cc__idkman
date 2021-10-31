@@ -8,11 +8,10 @@
 -- add more fuel items
 -- remove the initial fuel requirement ?
 
-local VERSION = "3.2.2"
+local VERSION = "3.2.3 beta 1"
 
 local IND_LAST = 16
-local FUEL_IND = 16 -- rename
-local CHUNKLOADER_IND = 15 -- rename
+local CHUNKLOADER_IND = 16 -- rename
 local PICKUP_IND = 1 -- rename
 
 local WHITELIST = {
@@ -426,7 +425,7 @@ function dig_main(arg)
 	if a == "help" then
 		print("help - this message")
 		print("list - list of optimized modes")
-		print("info: digs a rectangular hole; fuel goes to "..FUEL_IND.." and chunk loader goes to "..CHUNKLOADER_IND)
+		print("info: digs a rectangular hole; chunk loader goes to "..CHUNKLOADER_IND.."; fuel automatically consumed if any in backpack while out of fuel")
 		print("args: <{int} - hole size y> <{int} - hole size x>")
 		print("optional args: ["..arg_debug.." - enable debug output] ["..arg_optimize.." - optimize mining, may deform the rectangle]")
 		return
@@ -468,8 +467,6 @@ function dig_main(arg)
 		end
 	end
 
-	turtle.select(FUEL_IND)
-	turtle.refuel()
 	turtle.select(PICKUP_IND)
 
 	local ind = leny.."x"..lenx
