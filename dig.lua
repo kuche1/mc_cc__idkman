@@ -7,7 +7,7 @@
 -- create a wrapper for place !
 -- add more fuel items
 
-local VERSION = "3.2.1 beta"
+local VERSION = "3.2.1 beta 2"
 
 local IND_LAST = 16
 local FUEL_IND = 16 -- rename
@@ -67,7 +67,7 @@ end
 function backpack_contains(item_name)
 
 	for i=1,IND_LAST do
-		local item = turtle.getItemDetail(slot)
+		local item = turtle.getItemDetail(i)
 		if item ~= nil then
 			if item.name == item_name then
 				return true, i
