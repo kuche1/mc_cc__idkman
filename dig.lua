@@ -8,7 +8,7 @@
 -- add more fuel items
 -- remove the initial fuel requirement ?
 
-local VERSION = "3.2.3 beta 3"
+local VERSION = "3.2.4 beta 1"
 
 local IND_LAST = 16
 local CHUNKLOADER_IND = 16 -- rename
@@ -195,6 +195,15 @@ function opt_dig_all()
 		digUp()
 	end
 
+end
+
+-- wrapper place
+
+function place()
+	local could_be_placed = turtle.place()
+	if not could_be_placed then
+		error("could not place block")
+	end
 end
 
 -- wrapper move
