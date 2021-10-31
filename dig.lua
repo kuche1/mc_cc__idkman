@@ -1,17 +1,18 @@
 
 ---- TODO
--- automatically refuel ?
 -- resume after the last player has reconnected ?
 -- allow any y values grater than 3 ?
 -- check if no chunkloader ?
 -- put the chunkloader in the middle !
 -- create a wrapper for place !
+-- add more fuel items
 
-local VERSION = "3.1.7"
+local VERSION = "3.2.0 beta"
 
-local FUEL_IND = 16
-local CHUNKLOADER_IND = 15
-local PICKUP_IND = 1
+local IND_LAST = 16
+local FUEL_IND = 16 -- rename
+local CHUNKLOADER_IND = 15 -- rename
+local PICKUP_IND = 1 -- rename
 
 local WHITELIST = {
 	"minecraft:coal",
@@ -45,6 +46,8 @@ local BLACKLIST = {
 	"promenade:carbonite",
 	"promenade:blunite",
 	}
+
+local ITEM_FUEL = "minecraft:coal"
 
 -- globals
 
@@ -99,7 +102,7 @@ function dig_wrapper_post()
 	end
 
 	local available = 0
-	for i=1,16 do
+	for i=1,IND_LAST do
 		if i ~= PICKUP_IND and i ~= CHUNKLOADER_IND then
 			local item = turtle.getItemDetail(i)
 			if item == nil then
@@ -181,36 +184,51 @@ end
 
 -- wrapper move
 
-function move_wrapper(moved, reason)
-	if not moved then
-		-- what if ? reason == "Movement obstructed"
-		-- what if ? reason == "Out of fuel"
-		error("can't move, reason: "..reason)
+function move_wrapper(move_fnc)
+	while true do
+		local moved, reason = move_fnc()
+		if moved then
+			break
+		else
+			-- what if ? reason == "Movement obstructed"
+			if reason == "Out of fuel" then
+				local contains, idx = backpack_idx(ITEM_FUEL)
+				if contains then
+					local old_slot = turtle.getSelectedSlot()
+					turtle.select(idx)
+					turtle.refuel()
+					turtle.select(old_slot)
+				else
+					error("out of fuel, no fuel in backpack found")
+				end
+			else
+				error("can't move, reason: "..reason)
+			end
+		end
 	end
-
 end
 
 function forward()
 	opt_dig_all()
-	move_wrapper(turtle.forward())
+	move_wrapper(turtle.forward)
 	opt_dig_all()
 end
 
 function back()
 	opt_dig_all()
-	move_wrapper(turtle.back())
+	move_wrapper(turtle.back)
 	opt_dig_all()
 end
 
 function up()
 	opt_dig_all()
-	move_wrapper(turtle.up())
+	move_wrapper(turtle.up)
 	opt_dig_all()
 end
 
 function down()
 	opt_dig_all()
-	move_wrapper(turtle.down())
+	move_wrapper(turtle.down)
 	opt_dig_all()
 end
 
