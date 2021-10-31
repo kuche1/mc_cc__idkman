@@ -8,7 +8,7 @@
 -- add more fuel items
 -- remove the initial fuel requirement ?
 
-local VERSION = "3.2.4 beta 1"
+local VERSION = "3.2.4 beta 2"
 
 local IND_LAST = 16
 local CHUNKLOADER_IND = 16 -- rename
@@ -200,7 +200,7 @@ end
 -- wrapper place
 
 function place()
-	local could_be_placed = turtle.place()
+	local could_be_placed = place()
 	if not could_be_placed then
 		error("could not place block")
 	end
@@ -311,7 +311,7 @@ function dig_any_rectangle(leny, lenx)
 	turnLeft()
 	turnLeft()
 	turtle.select(CHUNKLOADER_IND)
-	turtle.place()
+	place()
 	turnLeft()
 	turnLeft()
 
@@ -401,7 +401,7 @@ function dig_any_rectangle(leny, lenx)
 			return 1
 		end
 		turtle.select(CHUNKLOADER_IND)
-		turtle.place()
+		place()
 
 		-- look forward
 
