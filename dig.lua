@@ -7,7 +7,7 @@
 -- create a wrapper for place !
 -- add more fuel items
 
-local VERSION = "3.2.0 beta"
+local VERSION = "3.2.1 beta"
 
 local IND_LAST = 16
 local FUEL_IND = 16 -- rename
@@ -275,7 +275,12 @@ function dig_any_rectangle(leny, lenx)
 
 	local y_loops = leny/3
 
-	local chuckloader_item_name = turtle.getItemDetail(CHUNKLOADER_IND).name
+	local item_chunkloader = turtle.getItemDetail(CHUNKLOADER_IND)
+	if item_chunkloader == nil then
+		print("You need to put a chunkloader in slot "..CHUNKLOADER_IND)
+		return 1
+	end
+	local chuckloader_item_name = item_chunkloader.name
 	if turtle.getItemCount(CHUNKLOADER_IND) < 2 then
 		print("You need to provide at least 2 chunk loaders")
 		return 1
