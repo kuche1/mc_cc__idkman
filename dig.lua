@@ -8,7 +8,7 @@
 -- add more fuel items
 -- remove the initial fuel requirement ?
 
-local VERSION = "3.3.7 beta 2"
+local VERSION = "3.4.0 beta 1"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -63,7 +63,13 @@ function echo(msg)
 end
 
 function error_msg(msg)
-	error(msg)
+	local status, error = pcall(function() error(msg, 2) end)
+	
+	local f = fs.open("error_log")
+	f.write(error)
+	f.close()
+
+	error(msg, 1)
 end
 
 -- backpack
