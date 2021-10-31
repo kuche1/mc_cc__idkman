@@ -8,7 +8,7 @@
 -- add more fuel items
 -- remove the initial fuel requirement ?
 
-local VERSION = "3.2.3 beta 1"
+local VERSION = "3.2.3 beta 2"
 
 local IND_LAST = 16
 local CHUNKLOADER_IND = 16 -- rename
@@ -219,6 +219,7 @@ function move_wrapper(move_fnc)
 			else
 				error("can't move, reason: "..reason)
 			end
+			break
 		end
 	end
 end
