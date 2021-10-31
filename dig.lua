@@ -8,7 +8,7 @@
 -- add more fuel items
 -- remove the initial fuel requirement ?
 
-local VERSION = "3.2.6 beta 1"
+local VERSION = "3.3.7 beta 1"
 
 local IND_LAST = 16
 local CHUNKLOADER_IND = 16 -- rename
@@ -54,12 +54,17 @@ local ITEM_FUEL = "minecraft:coal"
 local dbg = false
 local opt = false
 
--- echo
+-- echo, error
 
 function echo(msg)
 	if dbg then
 		print(msg)
 	end
+end
+
+function error_msg(msg)
+	command.say("ERROR: "..msg)
+	error(msg)
 end
 
 -- backpack
@@ -82,7 +87,7 @@ end
 function dig_wrapper_pre()
 	turtle.select(PICKUP_IND)
 	if turtle.getItemCount() ~= 0 then
-		error("pickup field not empty")
+		error_msg("pickup field not empty")
 	end
 end
 
@@ -138,7 +143,7 @@ function dig_wrapper_post()
 		return
 	end
 
-	error("not enough space")
+	error_msg("not enough space")
 
 end
 
@@ -151,7 +156,7 @@ function dig()
 			if info == "Nothing to dig here" then
 				break
 			else
-				error("can't dig, reason: "..info)
+				error_msg("can't dig, reason: "..info)
 			end
 		end
 		dig_wrapper_post()
@@ -166,7 +171,7 @@ function digUp()
 			if info == "Nothing to dig here" then
 				break
 			else
-				error("can't dig, reason: "..info)
+				error_msg("can't dig, reason: "..info)
 			end
 		end
 		dig_wrapper_post()
@@ -181,7 +186,7 @@ function digDown()
 			if info == "Nothing to dig here" then
 				break
 			else
-				error("can't dig, reason: "..info)
+				error_msg("can't dig, reason: "..info)
 			end
 		end
 		dig_wrapper_post()
@@ -202,7 +207,7 @@ end
 function place()
 	local could_be_placed = turtle.place()
 	if not could_be_placed then
-		error("could not place block")
+		error_msg("could not place block")
 	end
 end
 
@@ -221,10 +226,10 @@ function move_wrapper(move_fnc)
 				turtle.select(old_slot)
 				return move_wrapper(move_fnc)
 			else
-				error("out of fuel, no fuel in backpack found")
+				error_msg("out of fuel, no fuel in backpack found")
 			end
 		else
-			error("can't move, reason: "..reason)
+			error_msg("can't move, reason: "..reason)
 		end
 	end
 end
