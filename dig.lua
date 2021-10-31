@@ -6,8 +6,9 @@
 -- put the chunkloader in the middle !
 -- create a wrapper for place !
 -- add more fuel items
+-- remove the initial fuel requirement ?
 
-local VERSION = "3.2.1 beta 3"
+local VERSION = "3.2.2"
 
 local IND_LAST = 16
 local FUEL_IND = 16 -- rename
