@@ -62,6 +62,21 @@ function echo(msg)
 	end
 end
 
+-- backpack
+
+function backpack_contains(item_name)
+
+	for i=1,IND_LAST do
+		local item = turtle.getItemDetail(slot)
+		if item != nil then
+			if item.name == item_name then
+				return true, i
+			end
+		end
+	end
+	return false, -1
+end
+
 -- wrapper dig
 
 function dig_wrapper_pre()
@@ -192,7 +207,7 @@ function move_wrapper(move_fnc)
 		else
 			-- what if ? reason == "Movement obstructed"
 			if reason == "Out of fuel" then
-				local contains, idx = backpack_idx(ITEM_FUEL)
+				local contains, idx = backpack_contains(ITEM_FUEL)
 				if contains then
 					local old_slot = turtle.getSelectedSlot()
 					turtle.select(idx)
