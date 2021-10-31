@@ -68,7 +68,7 @@ function backpack_contains(item_name)
 
 	for i=1,IND_LAST do
 		local item = turtle.getItemDetail(slot)
-		if item != nil then
+		if item ~= nil then
 			if item.name == item_name then
 				return true, i
 			end
