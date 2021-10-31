@@ -7,7 +7,7 @@
 -- create a wrapper for place !
 -- add more fuel items
 
-local VERSION = "3.2.1 beta 2"
+local VERSION = "3.2.1 beta 3"
 
 local IND_LAST = 16
 local FUEL_IND = 16 -- rename
@@ -435,6 +435,8 @@ function dig_main(arg)
 			print(k)
 		end
 		return
+	elseif a == "version" then
+		return -- we're already printing this
 	end
 
 	if #arg < 2 then
