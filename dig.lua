@@ -8,10 +8,10 @@
 -- add more fuel items
 -- remove the initial fuel requirement ?
 
-local VERSION = "3.3.7 beta 1"
+local VERSION = "3.3.7 beta 2"
 
 local IND_LAST = 16
-local CHUNKLOADER_IND = 16 -- rename
+local IND_CHUNKLOADER = 16
 local PICKUP_IND = 1 -- rename
 
 local WHITELIST = {
@@ -63,7 +63,6 @@ function echo(msg)
 end
 
 function error_msg(msg)
-	command.say("ERROR: "..msg)
 	error(msg)
 end
 
@@ -123,7 +122,7 @@ function dig_wrapper_post()
 
 	local available = 0
 	for i=1,IND_LAST do
-		if i ~= PICKUP_IND and i ~= CHUNKLOADER_IND then
+		if i ~= PICKUP_IND and i ~= IND_CHUNKLOADER then
 			local item = turtle.getItemDetail(i)
 			if item == nil then
 				available = i
@@ -301,13 +300,13 @@ function dig_any_rectangle(leny, lenx)
 
 	local y_loops = leny/3
 
-	local item_chunkloader = turtle.getItemDetail(CHUNKLOADER_IND)
+	local item_chunkloader = turtle.getItemDetail(IND_CHUNKLOADER)
 	if item_chunkloader == nil then
-		print("You need to put a chunkloader in slot "..CHUNKLOADER_IND)
+		print("You need to put a chunkloader in slot "..IND_CHUNKLOADER)
 		return 1
 	end
 	local chuckloader_item_name = item_chunkloader.name
-	if turtle.getItemCount(CHUNKLOADER_IND) < 2 then
+	if turtle.getItemCount(IND_CHUNKLOADER) < 2 then
 		print("You need to provide at least 2 chunk loaders")
 		return 1
 	end
@@ -315,7 +314,7 @@ function dig_any_rectangle(leny, lenx)
 	-- this is ugly
 	turnLeft()
 	turnLeft()
-	turtle.select(CHUNKLOADER_IND)
+	turtle.select(IND_CHUNKLOADER)
 	place()
 	turnLeft()
 	turnLeft()
@@ -392,7 +391,7 @@ function dig_any_rectangle(leny, lenx)
 
 		local has_block, data = turtle.inspect()
 		if has_block and data.name == chuckloader_item_name then -- todo move to dig() function
-			turtle.select(CHUNKLOADER_IND)
+			turtle.select(IND_CHUNKLOADER)
 			turtle.dig()
 		else
 			dig()
@@ -401,11 +400,11 @@ function dig_any_rectangle(leny, lenx)
 		back()
 		back()
 
-		if turtle.getItemCount(CHUNKLOADER_IND) == 0 then
+		if turtle.getItemCount(IND_CHUNKLOADER) == 0 then
 			print("No chunk loaders left")
 			return 1
 		end
-		turtle.select(CHUNKLOADER_IND)
+		turtle.select(IND_CHUNKLOADER)
 		place()
 
 		-- look forward
@@ -440,7 +439,7 @@ function dig_main(arg)
 	if a == arg_help then
 		print(arg_help.." - this message")
 		print(arg_list.." - list of optimized modes")
-		print("info: digs a rectangular hole; chunk loader goes to "..CHUNKLOADER_IND.."; fuel automatically consumed if any in backpack while out of fuel")
+		print("info: digs a rectangular hole; chunk loader goes to "..IND_CHUNKLOADER.."; fuel automatically consumed if any in backpack while out of fuel")
 		print("args: <{int} - hole size y> <{int} - hole size x>")
 		print("optional args: ["..arg_debug.." - enable debug output] ["..arg_optimize.." - optimize mining, may deform the rectangle]")
 		return
