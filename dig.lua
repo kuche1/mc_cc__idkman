@@ -8,7 +8,7 @@
 -- add more fuel items
 -- remove the initial fuel requirement ?
 
-local VERSION = "3.2.5 beta 1"
+local VERSION = "3.2.6 beta 1"
 
 local IND_LAST = 16
 local CHUNKLOADER_IND = 16 -- rename
@@ -424,30 +424,34 @@ function dig_main(arg)
 	local arg_debug = "dbg"
 	local arg_optimize = "opt"
 
+	local arg_help = "--help"
+	local arg_list = "--list"
+	local arg_version = "--version"
+
 	local optimized_dig_modes = {}
 	optimized_dig_modes["3x1"] = dig_3_1
 
 	local a = arg[1]
-	if a == "help" then
-		print("help - this message")
-		print("list - list of optimized modes")
+	if a == arg_help then
+		print(arg_help.." - this message")
+		print(arg_list.." - list of optimized modes")
 		print("info: digs a rectangular hole; chunk loader goes to "..CHUNKLOADER_IND.."; fuel automatically consumed if any in backpack while out of fuel")
 		print("args: <{int} - hole size y> <{int} - hole size x>")
 		print("optional args: ["..arg_debug.." - enable debug output] ["..arg_optimize.." - optimize mining, may deform the rectangle]")
 		return
-	elseif a == "list" then
+	elseif a == arg_list then
 		print("optimized dig modes:")
 		for k,v in pairs(optimized_dig_modes) do
 			print(k)
 		end
 		return
-	elseif a == "version" then
+	elseif a == arg_version then
 		return -- we're already printing this
 	end
 
 	if #arg < 2 then
 		print("required arguments: y, x")
-		dig_main({"help"})
+		dig_main({arg_help})
 		return 1
 	end
 
