@@ -8,7 +8,7 @@
 -- add more fuel items
 -- remove the initial fuel requirement ?
 
-local VERSION = "3.2.3 beta 2"
+local VERSION = "3.2.3 beta 3"
 
 local IND_LAST = 16
 local CHUNKLOADER_IND = 16 -- rename
@@ -200,26 +200,22 @@ end
 -- wrapper move
 
 function move_wrapper(move_fnc)
-	while true do
-		local moved, reason = move_fnc()
-		if moved then
-			break
-		else
-			-- what if ? reason == "Movement obstructed"
-			if reason == "Out of fuel" then
-				local contains, idx = backpack_contains(ITEM_FUEL)
-				if contains then
-					local old_slot = turtle.getSelectedSlot()
-					turtle.select(idx)
-					turtle.refuel()
-					turtle.select(old_slot)
-				else
-					error("out of fuel, no fuel in backpack found")
-				end
+	local moved, reason = move_fnc()
+	if not moved then
+		-- what if ? reason == "Movement obstructed"
+		if reason == "Out of fuel" then
+			local contains, idx = backpack_contains(ITEM_FUEL)
+			if contains then
+				local old_slot = turtle.getSelectedSlot()
+				turtle.select(idx)
+				turtle.refuel()
+				turtle.select(old_slot)
+				return move_wrapper(move_fnc)
 			else
-				error("can't move, reason: "..reason)
+				error("out of fuel, no fuel in backpack found")
 			end
-			break
+		else
+			error("can't move, reason: "..reason)
 		end
 	end
 end
