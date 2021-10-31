@@ -8,7 +8,7 @@
 -- add more fuel items
 -- remove the initial fuel requirement ?
 
-local VERSION = "3.4.0 beta 1"
+local VERSION = "3.5.0 beta 2"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -66,11 +66,12 @@ function error_msg(msg)
 	local status, data = pcall(function() error(msg, 4) end)
 
 	print(data)
-	
+
 	local f = fs.open("error_log", "w")
 	f.write(os.date())
 	f.write("\n")
 	f.write(data)
+	f.write("\n")
 	f.close()
 
 	error(msg, 2)
@@ -490,6 +491,14 @@ function dig_main(arg)
 			print("unknown argument: "..a)
 			return 1
 		end
+	end
+
+	local exists, idx = backpack_contains(ITEM_FUEL)
+	if exists then
+		local last_idx = turtle.getSelectedSlot()
+		turtle.select(idx)
+		turtle.refuel()
+		turtle.select(last_idx)
 	end
 
 	turtle.select(PICKUP_IND)
