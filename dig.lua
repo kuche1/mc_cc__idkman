@@ -8,7 +8,7 @@
 -- add more fuel items
 -- remove the initial fuel requirement ?
 
-local VERSION = "3.2.4 beta 3"
+local VERSION = "3.2.5 beta 1"
 
 local IND_LAST = 16
 local CHUNKLOADER_IND = 16 -- rename
@@ -447,6 +447,7 @@ function dig_main(arg)
 
 	if #arg < 2 then
 		print("required arguments: y, x")
+		dig_main({"help"})
 		return 1
 	end
 
