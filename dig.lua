@@ -11,7 +11,7 @@
 -- drop all useless items ?
 -- auto place torches ?
 
-local VERSION = "4.5.2.0"
+local VERSION = "4.6.2.0"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -229,10 +229,6 @@ function dig_wrapper_post()
 
 	local name = item.name
 
-	--if not is_in_whitelist(name) and not is_in_droplist(name)  and not is_in_blacklist(name) then
-	--	log("picked up an unknown item: "..name)
-	--end
-
 	local available = 0
 	for i=1,IND_LAST do
 		if i ~= IND_PICKUP and i ~= IND_CHUNKLOADER then
@@ -257,6 +253,16 @@ function dig_wrapper_post()
 
 	if backpack_drop_useless_items() then
 		return dig_wrapper_post()
+	end
+
+	for i=1,IND_LAST do
+		local item = turtle.getItemDetail(i)
+		if item ~= nil then
+			local name = item.name
+			if not is_in_whitelist(name) and not is_in_droplist(name) and not is_in_blacklist(name) then
+				log("unknown item in inventory: "..name)
+			end
+		end
 	end
 
 	error_msg("not enough space, no more useless items to drop")
