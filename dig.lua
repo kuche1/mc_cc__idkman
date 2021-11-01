@@ -9,7 +9,7 @@
 -- clear error log on boot !
 -- log all unknown runes !
 
-local VERSION = "4.2.0 beta 0"
+local VERSION = "4.2.1 beta 0"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -538,7 +538,7 @@ function dig_main(arg)
 		end
 	end
 
-	if x > 18 then
+	if lenx > 18 then
 		print("you are using a high x value, make sure your chunk loader will support that")
 	end
 
