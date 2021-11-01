@@ -8,8 +8,9 @@
 -- automatically place chest and put items in chest ?
 -- clear error log on boot !
 -- log all unknown runes !
+-- drop all useless items ?
 
-local VERSION = "4.3.3.0"
+local VERSION = "4.5.0.0"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -27,27 +28,30 @@ local WHITELIST = {
 
 -- being on top means getting dropped first
 local DROPLIST = {
+	"minecraft:lapis_lazuli",
+	"pixelmon:ruby",
+	"pixelmon:sapphire",
+	"pixelmon:amethyst",
+	"pixelmon:crystal",
+}
+
+local BLACKLIST = {
 	"byg:rocky_stone",
 	"minecraft:andesite",
 	"minecraft:cobblestone",
 	"minecraft:diorite",
 	"minecraft:dirt",
+	"minecraft:dye",
 	"minecraft:granite",
 	"minecraft:gravel",
 	"minecraft:magma_block",
 	"minecraft:nautilus_shell",
 	"minecraft:stone",
 	"minecraft:wheat_seeds",
-	"pixelmon:amethyst",
-	"pixelmon:crystal",
 	"pixelmon:fire_stone_shard",
-	"pixelmon:ruby",
-	"pixelmon:sapphire",
 	"pixelmon:silicon_ore",
 	"promenade:carbonite",
 	"promenade:blunite",
-
-	"minecraft:lapis_lazuli",
 }
 
 local ITEM_FUEL = "minecraft:coal"
@@ -111,14 +115,11 @@ function is_in_droplist(item)
 	return is_item_in_list(item, DROPLIST)
 end
 
--- backpack
-
-function backpack_drop_stack(slot)
-	local idx = turtle.getSelectedSlot()
-	turtle.select(slot)
-	turtle.drop()
-	turtle.select(idx)
+function is_in_blacklist(item)
+	return is_item_in_list(item, BLACKLIST)
 end
+
+-- backpack
 
 function backpack_contains(item_name)
 
@@ -148,7 +149,14 @@ function backpack_consume_a_stack_of_fuel()
 
 end
 
-function backpack_drop_a_useless_item()
+function backpack_drop_stack(slot)
+	local idx = turtle.getSelectedSlot()
+	turtle.select(slot)
+	turtle.drop()
+	turtle.select(idx)
+end
+
+function backpack_drop_a_droplisted_item()
 
 	for dl_i=1,#DROPLIST do
 		local dl_name = DROPLIST[dl_i]
@@ -165,6 +173,26 @@ function backpack_drop_a_useless_item()
 	end
 
 	return false
+end
+
+function backpack_drop_all_blacklisted_items()
+
+	local dropped_any = false
+	for bl_i=1,#BLACKLIST do
+		local bl_name = BLACKLIST[bl_i]
+		for bp_i=1,IND_LAST do
+			local bp_item = turtle.getItemDetail(bp_i)
+			if bp_item ~= nil then
+				local bp_name = bp_item.name
+				if bp_name == bl_name then
+					backpack_drop_stack(bp_i)
+					dropped_any = true
+				end
+			end
+		end
+	end
+	return dropped_any
+
 end
 
 -- wrapper dig
@@ -185,7 +213,7 @@ function dig_wrapper_post()
 
 	local name = item.name
 
-	if not is_in_whitelist(name) and not is_in_droplist(name) then
+	if not is_in_whitelist(name) and not is_in_droplist(name)  and not is_in_blacklist(name) then
 		log("picked up an unknown item: "..name)
 	end
 
@@ -211,11 +239,15 @@ function dig_wrapper_post()
 		return
 	end
 
-	if backpack_drop_a_useless_item() then
+	if backpack_drop_all_blacklisted_items() then
 		return dig_wrapper_post()
 	else
-		error_msg("not enough space, no more useless items to drop")
+		if backpack_drop_a_droplisted_item() then
+			return dig_wrapper_post()
+		end
 	end
+
+	error_msg("not enough space, no more useless items to drop")
 
 end
 
