@@ -5,9 +5,10 @@
 -- check if no chunkloader ?
 -- put the chunkloader in the middle ?
 -- add more fuel items ?
--- automatically place chest and put items in chest
+-- automatically place chest and put items in chest ?
+-- clear error log on boot !
 
-local VERSION = "4.0.0 beta 1"
+local VERSION = "4.0.0 beta 2"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -124,6 +125,7 @@ function backpack_consume_a_stack_of_fuel()
 		return true
 	else
 		return false
+	end
 
 end
 
@@ -133,7 +135,7 @@ function backpack_drop_a_useless_item()
 		local dl_name = turtle.getItemDetail(dl_i).name
 		for bp_i=1,IND_LAST do
 			local bp_name = turtle.getItemDetail(bp_i).name
-			if bp_name = dl_name then
+			if bp_name == dl_name then
 				local idx = turtle.getSelectedSlot()
 				turtle.select(pb_i)
 				turtle.drop()
