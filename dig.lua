@@ -8,7 +8,7 @@
 -- automatically place chest and put items in chest ?
 -- clear error log on boot !
 
-local VERSION = "4.1.1 beta 0"
+local VERSION = "4.1.2 beta 0"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -139,7 +139,7 @@ function backpack_drop_a_useless_item()
 			local bp_name = turtle.getItemDetail(bp_i).name
 			if bp_name == dl_name then
 				local idx = turtle.getSelectedSlot()
-				turtle.select(pb_i)
+				turtle.select(bp_i)
 				turtle.drop()
 				turtle.select(idx)
 				return true
