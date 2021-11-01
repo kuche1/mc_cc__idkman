@@ -8,7 +8,7 @@
 -- automatically place chest and put items in chest ?
 -- clear error log on boot !
 
-local VERSION = "4.1.0 beta 0"
+local VERSION = "4.1.1 beta 0"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -531,6 +531,10 @@ function dig_main(arg)
 			print("unknown argument: "..a)
 			return 1
 		end
+	end
+
+	if x > 18 then
+		print("you are using a high x value, make sure your chunk loader will support that")
 	end
 
 	backpack_consume_a_stack_of_fuel() -- consime 1 stack of fuel if there is any, if not then whatever
