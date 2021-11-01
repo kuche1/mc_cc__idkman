@@ -7,8 +7,9 @@
 -- add more fuel items ?
 -- automatically place chest and put items in chest ?
 -- clear error log on boot !
+-- log all unknown runes !
 
-local VERSION = "4.1.2 beta 0"
+local VERSION = "4.2.0 beta 0"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -103,6 +104,13 @@ end
 
 -- backpack
 
+function backpack_drop_stack(slot)
+	local idx = turtle.getSelectedSlot()
+	turtle.select(slot)
+	turtle.drop()
+	turtle.select(idx)
+end
+
 function backpack_contains(item_name)
 
 	for i=1,IND_LAST do
@@ -135,19 +143,16 @@ function backpack_drop_a_useless_item()
 
 	for dl_i=1,#DROPLIST do
 		local dl_name = turtle.getItemDetail(dl_i).name
-		for bp_i=1,IND_LAST do
+		for bp_i=IND_LAST,1,-1 do
 			local bp_name = turtle.getItemDetail(bp_i).name
 			if bp_name == dl_name then
-				local idx = turtle.getSelectedSlot()
-				turtle.select(bp_i)
-				turtle.drop()
-				turtle.select(idx)
+				backpack_drop_stack(bp_i)
 				return true
 			end
 		end
 	end
-	return false
 
+	return false
 end
 
 -- wrapper dig
