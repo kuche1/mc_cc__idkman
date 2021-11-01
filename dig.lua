@@ -3,16 +3,15 @@
 -- resume after the last player has reconnected ?
 -- allow any y values grater than 3 ?
 -- check if no chunkloader ?
--- put the chunkloader in the middle !
--- create a wrapper for place !
--- add more fuel items
--- remove the initial fuel requirement ?
+-- put the chunkloader in the middle ?
+-- add more fuel items ?
+-- automatically place chest and put items in chest
 
-local VERSION = "3.5.0 beta 2"
+local VERSION = "4.0.0 beta 1"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
-local PICKUP_IND = 1 -- rename
+local IND_PICKUP = 1
 
 local WHITELIST = {
 	"minecraft:coal",
@@ -23,9 +22,10 @@ local WHITELIST = {
 	"minecraft:lapis_lazuli",
 	"minecraft:obsidian",
 	"minecraft:redstone",
-	}
+}
 
-local BLACKLIST = {
+-- being on top means getting dropped first
+local DROPLIST = {
 	"byg:rocky_stone",
 	"minecraft:andesite",
 	"minecraft:cobblestone",
@@ -45,7 +45,9 @@ local BLACKLIST = {
 	"pixelmon:silicon_ore",
 	"promenade:carbonite",
 	"promenade:blunite",
-	}
+
+	"minecraft:lapis_lazuli",
+}
 
 local ITEM_FUEL = "minecraft:coal"
 
@@ -77,6 +79,25 @@ function error_msg(msg)
 	error(msg, 2)
 end
 
+-- list operations
+
+function is_item_in_list(item, list)
+	for i=1,#list do
+		if item == list[i] then
+			return true
+		end
+	end
+	return false
+end
+
+function is_in_whitelist(item)
+	return is_item_in_list(item, WHITELIST)
+end
+
+function is_in_droplist(item)
+	return is_item_in_list(item, DROPLIST)
+end
+
 -- backpack
 
 function backpack_contains(item_name)
@@ -92,10 +113,43 @@ function backpack_contains(item_name)
 	return false, -1
 end
 
+function backpack_consume_a_stack_of_fuel()
+
+	local contains, idx = backpack_contains(ITEM_FUEL)
+	if contains then
+		local old_slot = turtle.getSelectedSlot()
+		turtle.select(idx)
+		turtle.refuel()
+		turtle.select(old_slot)
+		return true
+	else
+		return false
+
+end
+
+function backpack_drop_a_useless_item()
+
+	for dl_i=1,#DROPLIST do
+		local dl_name = turtle.getItemDetail(dl_i).name
+		for bp_i=1,IND_LAST do
+			local bp_name = turtle.getItemDetail(bp_i).name
+			if bp_name = dl_name then
+				local idx = turtle.getSelectedSlot()
+				turtle.select(pb_i)
+				turtle.drop()
+				turtle.select(idx)
+				return true
+			end
+		end
+	end
+	return false
+
+end
+
 -- wrapper dig
 
 function dig_wrapper_pre()
-	turtle.select(PICKUP_IND)
+	turtle.select(IND_PICKUP)
 	if turtle.getItemCount() ~= 0 then
 		error_msg("pickup field not empty")
 	end
@@ -110,30 +164,13 @@ function dig_wrapper_post()
 
 	local name = item.name
 
-	for i=1,#BLACKLIST do
-		local item = BLACKLIST[i]
-		if item == name then
-			turtle.drop()
-			return
-		end
-	end
-
-	local in_whitelist = false
-	for i=1,#WHITELIST do
-		local item = WHITELIST[i]
-		if item == name then
-			in_whitelist = true
-			break
-		end
-	end
-
-	if not in_whitelist then
-		print("picked up "..name)
+	if not is_in_whitelist(name) and not is_in_droplist(name) then
+		print("picked up unknown item: "..name)
 	end
 
 	local available = 0
 	for i=1,IND_LAST do
-		if i ~= PICKUP_IND and i ~= IND_CHUNKLOADER then
+		if i ~= IND_PICKUP and i ~= IND_CHUNKLOADER then
 			local item = turtle.getItemDetail(i)
 			if item == nil then
 				available = i
@@ -153,7 +190,11 @@ function dig_wrapper_post()
 		return
 	end
 
-	error_msg("not enough space")
+	if backpack_drop_a_useless_item() then
+		return dig_wrapper_post()
+	else
+		error_msg("not enough space, no more useless items to drop")
+	end
 
 end
 
@@ -228,12 +269,7 @@ function move_wrapper(move_fnc)
 	if not moved then
 		-- what if ? reason == "Movement obstructed"
 		if reason == "Out of fuel" then
-			local contains, idx = backpack_contains(ITEM_FUEL)
-			if contains then
-				local old_slot = turtle.getSelectedSlot()
-				turtle.select(idx)
-				turtle.refuel()
-				turtle.select(old_slot)
+			if backpack_consume_a_stack_of_fuel() then
 				return move_wrapper(move_fnc)
 			else
 				error_msg("out of fuel, no fuel in backpack found")
@@ -493,15 +529,8 @@ function dig_main(arg)
 		end
 	end
 
-	local exists, idx = backpack_contains(ITEM_FUEL)
-	if exists then
-		local last_idx = turtle.getSelectedSlot()
-		turtle.select(idx)
-		turtle.refuel()
-		turtle.select(last_idx)
-	end
-
-	turtle.select(PICKUP_IND)
+	backpack_consume_a_stack_of_fuel() -- consime 1 stack of fuel if there is any, if not then whatever
+	turtle.select(IND_PICKUP)
 
 	local ind = leny.."x"..lenx
 	for k,v in pairs(optimized_dig_modes) do
