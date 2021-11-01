@@ -8,7 +8,7 @@
 -- automatically place chest and put items in chest ?
 -- clear error log on boot !
 
-local VERSION = "4.0.0 beta 3"
+local VERSION = "4.1.0 beta 0"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -72,7 +72,7 @@ function error_msg(msg)
 
 	print(data)
 
-	local f = fs.open(ERROR_LOG_FILE, "w")
+	local f = fs.open(ERROR_LOG_FILE, "a")
 	f.write(os.date())
 	f.write("\n")
 	f.write(data)
