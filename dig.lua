@@ -69,7 +69,7 @@ local LOG_FILE = "dig_log_file"
 local log_initialized = false
 
 function log_write(msg)
-	local f = fs.open(LOG_FILE, "a")
+	local f = fs.open(LOG_FILE, "a") -- does this even work?
 	f.write(msg)
 	f.write("\n")
 	f.close()
