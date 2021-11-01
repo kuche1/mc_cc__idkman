@@ -11,7 +11,7 @@
 -- drop all useless items ?
 -- auto place torches ?
 
-local VERSION = "4.5.1.0"
+local VERSION = "4.5.2.0"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -198,6 +198,19 @@ function backpack_drop_all_blacklisted_items()
 
 end
 
+function backpack_drop_useless_items()
+
+	if backpack_drop_all_blacklisted_items() then
+		return true
+	else
+		if backpack_drop_a_droplisted_item() then
+			return true
+		end
+	end
+	return false
+
+end
+
 -- wrapper dig
 
 function dig_wrapper_pre()
@@ -216,9 +229,9 @@ function dig_wrapper_post()
 
 	local name = item.name
 
-	if not is_in_whitelist(name) and not is_in_droplist(name)  and not is_in_blacklist(name) then
-		log("picked up an unknown item: "..name)
-	end
+	--if not is_in_whitelist(name) and not is_in_droplist(name)  and not is_in_blacklist(name) then
+	--	log("picked up an unknown item: "..name)
+	--end
 
 	local available = 0
 	for i=1,IND_LAST do
@@ -242,12 +255,8 @@ function dig_wrapper_post()
 		return
 	end
 
-	if backpack_drop_all_blacklisted_items() then
+	if backpack_drop_useless_items() then
 		return dig_wrapper_post()
-	else
-		if backpack_drop_a_droplisted_item() then
-			return dig_wrapper_post()
-		end
 	end
 
 	error_msg("not enough space, no more useless items to drop")
