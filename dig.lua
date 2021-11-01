@@ -8,7 +8,7 @@
 -- automatically place chest and put items in chest ?
 -- clear error log on boot !
 
-local VERSION = "4.0.0 beta 2"
+local VERSION = "4.0.0 beta 3"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -57,7 +57,7 @@ local ITEM_FUEL = "minecraft:coal"
 local dbg = false
 local opt = false
 
--- echo, error
+-- logging
 
 function echo(msg)
 	if dbg then
@@ -65,12 +65,14 @@ function echo(msg)
 	end
 end
 
+local ERROR_LOG_FILE = "error_log"
+
 function error_msg(msg)
 	local status, data = pcall(function() error(msg, 4) end)
 
 	print(data)
 
-	local f = fs.open("error_log", "w")
+	local f = fs.open(ERROR_LOG_FILE, "w")
 	f.write(os.date())
 	f.write("\n")
 	f.write(data)
