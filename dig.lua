@@ -9,8 +9,9 @@
 -- clear error log on boot !
 -- log all unknown runes !
 -- drop all useless items ?
+-- auto place torches ?
 
-local VERSION = "4.5.0.0"
+local VERSION = "4.5.1.0"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -23,16 +24,18 @@ local WHITELIST = {
 	"minecraft:gold_ore",
 	"minecraft:iron_ore",
 	"minecraft:obsidian",
-	"minecraft:redstone",
 }
 
 -- being on top means getting dropped first
 local DROPLIST = {
+	"minecraft:torch",
 	"minecraft:lapis_lazuli",
 	"pixelmon:ruby",
 	"pixelmon:sapphire",
 	"pixelmon:amethyst",
 	"pixelmon:crystal",
+
+	"minecraft:redstone",
 }
 
 local BLACKLIST = {
