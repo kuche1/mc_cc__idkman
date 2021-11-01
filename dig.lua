@@ -9,7 +9,7 @@
 -- clear error log on boot !
 -- log all unknown runes !
 
-local VERSION = "4.2.1 beta 0"
+local VERSION = "4.3.0.0"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -21,7 +21,6 @@ local WHITELIST = {
 	"minecraft:flint",
 	"minecraft:gold_ore",
 	"minecraft:iron_ore",
-	"minecraft:lapis_lazuli",
 	"minecraft:obsidian",
 	"minecraft:redstone",
 }
@@ -66,20 +65,30 @@ function echo(msg)
 	end
 end
 
-local ERROR_LOG_FILE = "error_log"
+local LOG_FILE = "dig_log_file"
+local log_initialized = false
+
+function log_write(msg)
+	local f = fs.open(LOG_FILE, "a")
+	f.write(msg)
+	f.write("\n")
+	f.close()
+end
+
+function log(msg)
+	if not log_initialized then
+		log_write("-----=====-----")
+		log_write(os.date())
+		log_initialized = true
+	end
+
+	print("Log: "..msg)
+	log_write(msg)
+end
 
 function error_msg(msg)
 	local status, data = pcall(function() error(msg, 4) end)
-
-	print(data)
-
-	local f = fs.open(ERROR_LOG_FILE, "a")
-	f.write(os.date())
-	f.write("\n")
-	f.write(data)
-	f.write("\n")
-	f.close()
-
+	log(data)
 	error(msg, 2)
 end
 
@@ -174,7 +183,7 @@ function dig_wrapper_post()
 	local name = item.name
 
 	if not is_in_whitelist(name) and not is_in_droplist(name) then
-		print("picked up unknown item: "..name)
+		log("picked up an unknown item: "..name)
 	end
 
 	local available = 0
