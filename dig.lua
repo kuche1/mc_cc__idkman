@@ -9,7 +9,7 @@
 -- clear error log on boot !
 -- log all unknown runes !
 
-local VERSION = "4.3.1.0"
+local VERSION = "4.3.2.0"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -151,7 +151,7 @@ end
 function backpack_drop_a_useless_item()
 
 	for dl_i=1,#DROPLIST do
-		local dl_name = DROPLIST[i].name
+		local dl_name = DROPLIST[i]
 		for bp_i=IND_LAST,1,-1 do
 			local bp_item = turtle.getItemDetail(bp_i)
 			if bp_item ~= nil then
