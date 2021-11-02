@@ -10,8 +10,9 @@
 -- log all unknown runes !
 -- drop all useless items ?
 -- auto place torches ?
+-- continue where left off ?
 
-local VERSION = "4.6.2.0"
+local VERSION = "4.6.2.1"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
