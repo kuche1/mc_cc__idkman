@@ -1,18 +1,16 @@
 
 ---- TODO
--- resume after the last player has reconnected ?
--- allow any y values grater than 3 ?
 -- check if no chunkloader ?
 -- put the chunkloader in the middle ?
 -- add more fuel items ?
 -- automatically place chest and put items in chest ?
--- clear error log on boot !
--- log all unknown runes !
--- drop all useless items ?
+-- clear error log on boot ?
 -- auto place torches ?
--- continue where left off ?
+-- continue where left off after interrupt ?
+-- attack enemies in range ?
+-- add more fuel types ! (block of coal)
 
-local VERSION = "4.6.2.1"
+local VERSION = "4.6.3.0"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -278,6 +276,12 @@ function dig()
 		if not digged then
 			if info == "Nothing to dig here" then
 				break
+			elseif info == "Cannot break protected block" then
+				local has_block, data = turtle.inspet()
+				if not has_block then
+					error_msg("block removed before inspect could be executed; can't break protected block")
+				end
+				error_msg("can't break protected block: "..data.name)
 			else
 				error_msg("can't dig, reason: "..info)
 			end
