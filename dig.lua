@@ -9,8 +9,9 @@
 -- continue where left off after interrupt ?
 -- attack enemies in range ?
 -- add more fuel types ! (block of coal)
+-- what if movement gets obstructed by lava+water !
 
-local VERSION = "4.6.3.0"
+local VERSION = "4.7.0.0"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -343,13 +344,15 @@ end
 function move_wrapper(move_fnc)
 	local moved, reason = move_fnc()
 	if not moved then
-		-- what if ? reason == "Movement obstructed"
 		if reason == "Out of fuel" then
 			if backpack_consume_a_stack_of_fuel() then
 				return move_wrapper(move_fnc)
 			else
 				error_msg("out of fuel, no fuel in backpack found")
 			end
+		elseif reason == "Movement obstructed" then
+			dig()
+			return move_wrapper(move_fnc)
 		else
 			error_msg("can't move, reason: "..reason)
 		end
