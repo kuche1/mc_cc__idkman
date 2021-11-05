@@ -11,7 +11,7 @@
 -- add more fuel types ! (block of coal)
 -- what if movement gets obstructed by lava+water !
 
-local VERSION = "5.3.0.0"
+local VERSION = "5.3.1.0"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -20,10 +20,8 @@ local IND_PICKUP = 1
 local WHITELIST = {
 	"minecraft:coal",
 	"minecraft:diamond",
-	"minecraft:flint",
 	"minecraft:gold_ore",
 	"minecraft:iron_ore",
-	"minecraft:obsidian",
 }
 
 -- being on top means getting dropped first
@@ -35,6 +33,10 @@ local DROPLIST = {
 	"pixelmon:amethyst",
 	"pixelmon:crystal",
 
+	"minecraft:slime_ball",
+	"minecraft:bone",
+	"minecraft:flint",
+	"minecraft:obsidian",
 	"minecraft:redstone",
 }
 
@@ -42,6 +44,7 @@ local BLACKLIST = {
 	"byg:rocky_stone",
 	"iceandfire:chared_cobblestone",
 	"iceandfire:chared_stone",
+	"iceandfire:silver_ore",
 	"minecraft:andesite",
 	"minecraft:cobblestone",
 	"minecraft:diorite",
