@@ -11,7 +11,7 @@
 -- add more fuel types ! (block of coal)
 -- what if movement gets obstructed by lava+water !
 
-local VERSION = "4.9.0.0"
+local VERSION = "4.9.0.1"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -353,7 +353,6 @@ function move_wrapper(move_fnc)
 			turtle.attack()
 			dig()
 			return move_wrapper(move_fnc)
-			error_msg("can't move: a mob is blocking the way")
 		else
 			error_msg("can't move, reason: "..reason)
 		end
