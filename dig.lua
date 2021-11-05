@@ -11,7 +11,7 @@
 -- add more fuel types ! (block of coal)
 -- what if movement gets obstructed by lava+water !
 
-local VERSION = "5.0.0.0"
+local VERSION = "5.1.0.0"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -340,7 +340,9 @@ end
 function place()
 	local could_be_placed = turtle.place()
 	if not could_be_placed then
-		error_msg("could not place block")
+		turtle.attack()
+		dig()
+		return place()
 	end
 end
 
