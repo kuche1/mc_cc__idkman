@@ -11,7 +11,7 @@
 -- add more fuel types ! (block of coal)
 -- what if movement gets obstructed by lava+water !
 
-local VERSION = "5.2.0.0"
+local VERSION = "5.3.0.0"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -40,6 +40,7 @@ local DROPLIST = {
 
 local BLACKLIST = {
 	"byg:rocky_stone",
+	"iceandfire:chared_cobblestone",
 	"iceandfire:chared_stone",
 	"minecraft:andesite",
 	"minecraft:cobblestone",
