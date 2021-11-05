@@ -11,7 +11,7 @@
 -- add more fuel types ! (block of coal)
 -- what if movement gets obstructed by lava+water !
 
-local VERSION = "4.8.0.0"
+local VERSION = "4.9.0.0"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -350,10 +350,9 @@ function move_wrapper(move_fnc)
 			end
 			error_msg("out of fuel, no fuel in backpack found")
 		elseif reason == "Movement obstructed" then
-			if turtle.detect() then
-				dig()
-				return move_wrapper(move_fnc)
-			end
+			turtle.attack()
+			dig()
+			return move_wrapper(move_fnc)
 			error_msg("can't move: a mob is blocking the way")
 		else
 			error_msg("can't move, reason: "..reason)
