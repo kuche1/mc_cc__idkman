@@ -11,7 +11,7 @@
 -- add more fuel types ! (block of coal)
 -- what if movement gets obstructed by lava+water !
 
-local VERSION = "4.9.0.1"
+local VERSION = "5.0.0.0"
 
 local IND_LAST = 16
 local IND_CHUNKLOADER = 16
@@ -215,12 +215,17 @@ end
 
 function dig_wrapper_pre()
 	turtle.select(IND_PICKUP)
+	move_item_from_pickup_slot_to_backpack()
 	if turtle.getItemCount() ~= 0 then
 		error_msg("pickup field not empty")
 	end
 end
 
-function dig_wrapper_post()
+function move_item_from_pickup_slot_to_backpack()
+
+	if turtle.getSelectedSlot() ~= IND_PICKUP then
+		error_msg("the selected slot should have been the pickup index...")
+	end
 
 	local item = turtle.getItemDetail()
 	if item == nil then
@@ -252,7 +257,7 @@ function dig_wrapper_post()
 	end
 
 	if backpack_drop_useless_items() then
-		return dig_wrapper_post()
+		return move_item_from_pickup_slot_to_backpack()
 	end
 
 	for i=1,IND_LAST do
@@ -287,7 +292,7 @@ function dig()
 				error_msg("can't dig, reason: "..info)
 			end
 		end
-		dig_wrapper_post()
+		move_item_from_pickup_slot_to_backpack()
 	end
 end
 
@@ -302,7 +307,7 @@ function digUp()
 				error_msg("can't dig, reason: "..info)
 			end
 		end
-		dig_wrapper_post()
+		move_item_from_pickup_slot_to_backpack()
 	end
 end
 
@@ -317,7 +322,7 @@ function digDown()
 				error_msg("can't dig, reason: "..info)
 			end
 		end
-		dig_wrapper_post()
+		move_item_from_pickup_slot_to_backpack()
 	end
 end
 
